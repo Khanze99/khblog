@@ -1,0 +1,61 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="post">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.text|linebreaksbr }}</p>
+        {% if post.image %}
+            <img src="{{post.image.url}}" class="img-responsive">
+        {% endif %}
+        <div class="date">
+            <p>Author: {{ post.author }}</p>
+            <form method="post">
+                {% if request.user.is_authenticated %}
+                    <a class="glyphicon glyphicon-thumbs-up" href="{% url 'post_like' id=request.user.id pk=post.pk %}" methods="post" ></a>
+                    <span style="padding-right: 10px;">{{post.likes}}</span>
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                    <a class="glyphicon glyphicon-thumbs-down" href="{% url 'post_dislike' id=request.user.id pk=post.pk %}" methods="post"></a>
+                                <span>{{post.dislikes}}</span>
+                {% endif %}
+                {% if request.user in list_liked_by %}
+                        <p style="color: #4682B4;">I like</p>
+                    {% endif %}
+                {% if request.user in list_disliked_by %}
+                        <p style="color: #4682B4;">I do not like</p>
+                    {% endif %}
+                <p style="padding : 5px;">Created date : {{ post.created_date }}</p>
+            <p>Views : {{ post.view }}</p>
+            </form>
+        </div>
+        {% if request.user.is_authenticated and post in posts %}
+            {% if post.created_date %}
+                        <a href="{% url 'post_edit' pk=post.pk %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Edit</span></a>
+                        <a href="{% url 'post_remove' pk=post.pk %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Remove</span></a>
+            {% endif %}
+        {% endif %}
+    </div>
+<hr>
+{% for comment in post.comments.all %}
+    <div class="comment">
+        <h3>    <img class="img-thumbnail" src="{{ comment.author.profile.image.url }}" width="60px" height="60px">
+{{ comment.author }}</h3>
+        <p>{{ comment.text|linebreaks }}</p>
+        <div class="date">
+            {{ comment.created_date }}
+            {% if comment in comments and user.is_authenticated %}
+                <a href="{% url 'remove_comment' pk=post.pk id=comment.id %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Remove</span></a>
+                <a href="{% url 'edit_comment' pk=post.pk id=comment.id %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Edit</span></a>
+            {% endif %}
+            {% for child in comment.children%}
+            <h3>    <img class="img-thumbnail" src="{{ child.author.profile.image.url }}" width="40px" height="40px"> {{child.author}}</h3>
+                <p>{{comment.author}}, {{child.text}}</p>
+            {% endfor %}
+        </div>
+
+    </div>
+{% endfor %}
+{% if user.is_authenticated %}
+<a href="{% url 'add_comment_to_post' pk=post.pk %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Add comment</span></a>
+{% endif %}
+{% endblock %}

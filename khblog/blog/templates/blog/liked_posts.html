@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+            {% for post in liked_posts %}
+                <article class="media content-section">
+                <div>
+                <div>
+                    <h1>                <img class="img-thumbnail" src="{{ post.author.profile.image.url }}" width="60" height="60">
+                                            <a href="{% url 'post_detail' pk=post.pk%}">{{ post.title }}</a></h1>
+                </div>
+                <div class="post">
+                    <div class="date">
+                        <p>Опубликовано: {{ post.created_date }}</p>
+                        <p> Author: {{post.author}}</p>
+                    </div>
+                    <a href="{%url 'post_detail' pk=post.pk%}">Comments: {{post.comments.count}}</a>
+                    <hr>
+
+                </div>
+                </div>
+                    </article>
+            {% endfor %}
+{% endblock content %}

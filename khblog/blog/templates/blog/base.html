@@ -1,0 +1,32 @@
+{% load static %}
+<html>
+    <head>
+        <title>Khanze blog</title>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+    </head>
+    <body>
+    <div class="page-header">
+        <h1><a href="/">Khanze Blog</a></h1>
+        {% if user.is_authenticated %}
+            <a href="{% url 'post_new' %}" class="top-menu"><span class="btn btn-light" style="color: 4682B4;">New post</span></a>
+            <a href="{% url 'logout_view' %}"><span class="btn btn-light" style="color: 4682B4;">Logout</span></a>
+            <a href="{% url 'profile' %}"><span class="btn btn-light" style="color:4682B4;">{{request.user}}</span></a>
+        {% else %}
+        <a href="{% url 'login_view' %}"><span class="btn btn-light" style="color: 4682B4;">Login</span></a>
+        <a href="{% url 'register_view' %}"><span class="btn btn-light" style="color: 4682B4;">Sign up</span></a>
+        {% endif %}
+    </div>
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
