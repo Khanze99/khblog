@@ -20,14 +20,17 @@ def post_list(request):
 
 def post_detail(request, pk):
     if request.user.is_authenticated:
-        comments = Comment.objects.filter(author=request.user)
+        comments_root = Comment.objects.filter(author=request.user)
         posts = Post.objects.filter(author=request.user)
         user_item = User.objects.filter(liked_by=pk)
         post = get_object_or_404(Post, pk=pk)
+        comments = post.comments.filter(parent__isnull=True)
         post.view += 1
         post.save()
         return render(request, 'blog/post_detail.html', {'post': post, 'posts': posts,
-                                                         'comments': comments, 'user_item': user_item,
+                                                         'comments': comments,
+                                                         'comments_root': comments_root,
+                                                         'user_item': user_item,
                                                          'list_liked_by': post.liked_by.all(),
                                                          'list_disliked_by': post.disliked_by.all()})
     else:
