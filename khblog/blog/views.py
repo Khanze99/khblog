@@ -96,7 +96,7 @@ def add_comment_to_post(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         form = CommentForm()
-    return render(request, 'blog/add_comment_to_post.html', {'form': form})
+    return render(request, 'blog/add_comment_to.html', {'form': form})
 
 
 @login_required
@@ -108,16 +108,15 @@ def remove_comment(request, pk, id):
 
 @login_required
 def edit_comment(request, pk, id):
-    post = get_object_or_404(Comment, id=id, author=request.user)
+    comment = get_object_or_404(Comment, id=id, author=request.user)
     if request.method == "POST":
-        form = CommentForm(request.POST, instance=post)
+        form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.comment = comment
             comment.save()
             return redirect('post_detail', pk=pk)
     else:
-        form = CommentForm(instance=post)
+        form = CommentForm(instance=comment)
     return render(request, 'blog/edit_comment.html', {'form': form})
 
 
@@ -204,5 +203,19 @@ def get_user_posts(request, id):
     return render(request, 'blog/user_posts.html', context={'posts': posts})
 
 
-def reply_comment(request, id):
-    pass
+def reply_comment(request, uid, pk, cid):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            user = User.objects.get(id=uid)
+            post = Post.objects.get(pk=pk)
+            reply_comment_to_user = Comment.objects.get(id=cid)
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = user
+            comment.parent = reply_comment_to_user
+            comment.save()
+            return redirect('post_detail', pk=pk)
+    else:
+        form = CommentForm()
+    return render(request, 'blog/add_comment_to.html', {'form': form})

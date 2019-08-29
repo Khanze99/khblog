@@ -1,0 +1,14 @@
+from django.contrib.auth.models import User
+from blog.models import Post
+from blog.models import Comment
+
+post = Post.objects.get(pk=pk)
+comment = Comment.objects.get(id=id)
+user = User.objects.get(id=id)
+
+Comment.objects.create(post=post, author=user, text="it's reply comment", parent=Comment.objects.get(id=id))
+
+id комментария
+pk поста
+uid
+
