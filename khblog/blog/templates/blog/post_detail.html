@@ -36,10 +36,13 @@
         {% endif %}
     </div>
 <hr>
+{% if user.is_authenticated %}
+<a href="{% url 'add_comment_to_post' pk=post.pk %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Add comment</span></a>
+{% endif %}
 {% for comment in comments %}
     <div class="comment">
-        <h3>    <img class="img-thumbnail" src="{{ comment.author.profile.image.url }}" width="60px" height="60px">
-{{ comment.author }}</h3>
+        <h3>    <a href="{% url 'profiles' id=comment.author.id %}" style="color:black;"><img class="img-thumbnail" src="{{ comment.author.profile.image.url }}" width="100px" height="100px">
+            {{ comment.author }}</a></h3>
         <p>{{ comment.text|linebreaks }}</p>
         <div class="date">
             {{ comment.created_date }}
@@ -48,15 +51,17 @@
                 <p><a href="{% url 'remove_comment' pk=post.pk id=comment.id %}">Remove</a></p>
                 <a href="{% url 'edit_comment' pk=post.pk id=comment.id %}">Edit</a>
             {% endif %}
+            </div>
+            <div class="comment" style="padding-left: 50px;">
             {% for child in comment.children%}
-            <h3>    <img class="img-thumbnail" src="{{ child.author.profile.image.url }}" width="40px" height="40px"> {{child.author}}</h3>
-                <p>{{comment.author}}, {{child.text}}</p>
+                <h3>    <a href="{% url 'profiles' id=child.author.id %}" style="color:black;"><img class="img-thumbnail" src="{{ child.author.profile.image.url }}" width="70px" height="70px">{{child.author}}</a></h3>
+                <p><a href="{% url 'profiles' id=comment.author.id %}">{{comment.author}}</a>, {{child.text}}</p>
+                <div class="date">
+                    <p>{{child.created_date}}</p>
+                </div>
             {% endfor %}
-        </div>
+            </div>
 
     </div>
 {% endfor %}
-{% if user.is_authenticated %}
-<a href="{% url 'add_comment_to_post' pk=post.pk %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Add comment</span></a>
-{% endif %}
 {% endblock %}

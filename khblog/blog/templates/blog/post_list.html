@@ -1,17 +1,12 @@
 {% extends 'blog/base.html'%}
 
     {% block content%}
-        <form class="form-inline md-form form-sm" action="{% url 'post_list'%}">
-            <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search"
-            name="Search">
-            <button class="btn btn-light" type="submit" style="color: white; background: #4682B4;">Search</button>
-        </form>
             {% for post in posts %}
                 <article class="media content-section">
                 <div>
                     <div>
                     <h1>
-                        <a href="{% url 'profiles' id=post.author.id %}"><img class="img-thumbnail" src="{{ post.author.profile.image.url }}" width="70px" height="70px"></a>
+                        <a href="{% url 'profiles' id=post.author.id %}"><img class="img-thumbnail" src="{{ post.author.profile.image.url }}" width="100px" height="100px"></a>
                         <a href="{% url 'post_detail' pk=post.pk%}" >{{ post.title }}</a></h1>
                     </div>
                     <div class="post">
