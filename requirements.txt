@@ -1,5 +1,6 @@
 Django==2.0.13
 django-crispy-forms==1.7.2
+djangorestframework==3.10.2
 Pillow==6.0.0
 psycopg2==2.8.2
 pytz==2018.9
