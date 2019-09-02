@@ -1,26 +1,27 @@
 version: '3'
 
 services:
+  db:
+    image: postgres:10
+    environment:
+      - POSTGRES_USER='khanze'
+      - POSTGRES_PASSWORD='ConeForest1928'
+      - POSTGRES_DB='khblog_db'
+    volumes:
+      - ./khblog/data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
   web_service:
     build: .
     environment:
-      - POSTGRES_USER='-'
-      - POSTGRES_PASSWORD='-'
-      - POSTGRES_DB='-'
-    command: python3 manage.py runserver 0.0.0.0:8000
+      - POSTGRES_USER='khanze'
+      - POSTGRES_PASSWORD='ConeForest1928'
+      - POSTGRES_DB='khblog_db'
+    command: gunicorn --bind 0.0.0.0:8000 mysite.wsgi
     ports:
       - "8000:8000"
     depends_on:
       - db
-
-
-  db:
-    image: postgres:10
-    environment:
-      - POSTGRES_USER='-'
-      - POSTGRES_PASSWORD='-'
-      - POSTGRES_DB='-'
-    volumes:
-      - /var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+    links:
+      - db:db
