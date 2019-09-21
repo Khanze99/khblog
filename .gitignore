@@ -7,3 +7,5 @@ db.sqlite3
 /khblog/media/
 .idea/
 data
+bin/database_env
+media

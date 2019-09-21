@@ -3,25 +3,56 @@ version: '3'
 services:
   db:
     image: postgres:10
-    environment:
-      - POSTGRES_USER='khanze'
-      - POSTGRES_PASSWORD='ConeForest1928'
-      - POSTGRES_DB='khblog_db'
+    env_file:
+      - ./bin/database_env
     volumes:
-      - ./khblog/data:/var/lib/postgresql/data
+      - db_volume:/var/lib/postgresql/data
+    networks:
+      - db_network
     ports:
       - "5432:5432"
 
   web_service:
+    restart: always
+    container_name: web_service
     build: .
-    environment:
-      - POSTGRES_USER='khanze'
-      - POSTGRES_PASSWORD='ConeForest1928'
-      - POSTGRES_DB='khblog_db'
-    command: gunicorn --bind 0.0.0.0:8000 mysite.wsgi
-    ports:
-      - "8000:8000"
+    command: sh -c "cd khblog && gunicorn --bind 0.0.0.0:8000 mysite.wsgi"
+    env_file:
+      - ./bin/database_env
+    volumes:
+      - ./static:/khblog/khblog/static
+      - ./media:/khblog/khblog/media
     depends_on:
       - db
+    expose:
+      - "8000"
     links:
       - db:db
+    networks:
+      - nginx_network
+      - db_network
+
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - web_service
+    volumes:
+      - ./nginx:/etc/nginx/
+      - ./static:/usr/src/static
+      - ./media:/usr/src/media
+    networks:
+      - nginx_network
+      - db_network
+
+
+networks:
+  nginx_network:
+    driver: bridge
+  db_network:
+    driver: bridge
+
+volumes:
+  db_volume:
