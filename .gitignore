@@ -4,8 +4,7 @@ venv
 db.sqlite3
 **static
 .DS_Store
-/khblog/media/
+**media
 .idea/
 data
 bin/database_env
-media
