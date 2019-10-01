@@ -92,7 +92,6 @@ DATABASES = {
 }
 
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
@@ -144,4 +143,5 @@ DEFAULT_FROM_EMAIL = "-"
 EMAIL_HOST_USER = "-"
 EMAIL_HOST_PASSWORD = "-"
 EMAIL_MESSAGE = "Hello my friend, in this blog you can share your news and learn new things from other registration. Thank you for being with us"
+
 

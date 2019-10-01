@@ -24,7 +24,7 @@ class PostListSerializers(ModelSerializer):
         view_name='detail_api',
         lookup_field='pk'
     )
-    created_date = DateTimeField(format="%d.%m.%Y %H:%M:%S")
+    created_date = DateTimeField(format="%Y-%m-%d %H:%M:%S")
 
     class Meta:
         model = Post
@@ -41,14 +41,20 @@ class PostListSerializers(ModelSerializer):
 
 
 class PostDetailSerializers(ModelSerializer):
-    created_date = DateTimeField(format="%d.%m.%Y %H:%M:%S")
-    update_date = DateTimeField(format="%d.%m.%Y %H:%M:%S")
+    created_date = DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    update_date = DateTimeField(format="%Y-%m-%d %H:%M:%S")
 
     class Meta:
         model = Post
         fields = (
             '__all__'
         )
+
+
+class PostUpdateSerializer(ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ('title', 'text')
 
 
 

@@ -5,8 +5,10 @@ from rest_framework.generics import (
     DestroyAPIView,
     CreateAPIView,
     RetrieveUpdateAPIView)
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from blog.models import Post
-from .serializers import PostListSerializers, PostDetailSerializers, PostCreateSerializers
+from .serializers import PostListSerializers, PostDetailSerializers, PostCreateSerializers, PostUpdateSerializer
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import (
                                         AllowAny,
@@ -45,14 +47,15 @@ class PostListApiView(ListAPIView):
 
 class PostUPDATEApiView(RetrieveUpdateAPIView):
     queryset = Post.objects.all()
-    serializer_class = PostListSerializers
+    serializer_class = PostUpdateSerializer
     permission_classes = [IsAuthenticated]
 
 
-class PostDeleteApiView(DestroyAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostListSerializers
-    permission_classes = [IsAuthenticated]
+class PostDeleteApiView(APIView):
+    def delete(self, request, pk):
+        post = Post.objects.get(pk=pk)
+        post.delete()
+        return Response({'{}'.format(pk): 'deleted'})
 
 
 class PostDetailAPIView(RetrieveAPIView):
