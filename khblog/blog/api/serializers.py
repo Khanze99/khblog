@@ -1,14 +1,20 @@
-from rest_framework.serializers import ModelSerializer, HyperlinkedIdentityField, SerializerMethodField
+from rest_framework.serializers import (ModelSerializer,
+                                        HyperlinkedIdentityField,
+                                        SerializerMethodField,
+                                        DateTimeField,
+                                        ImageField)
 from blog.models import Post
 
 
 class PostCreateSerializers(ModelSerializer):
+    image = ImageField(allow_null=True)
+
     class Meta:
         model = Post
         fields = (
             'title',
             'text',
-            'published_date'
+            'image'
         )
 
 
@@ -18,6 +24,7 @@ class PostListSerializers(ModelSerializer):
         view_name='detail_api',
         lookup_field='pk'
     )
+    created_date = DateTimeField(format="%d.%m.%Y %H:%M:%S")
 
     class Meta:
         model = Post
@@ -26,30 +33,21 @@ class PostListSerializers(ModelSerializer):
             'author',
             'id',
             'title',
-            'text',
-            'published_date'
+            'created_date'
         )
 
     def get_user(self, obj):
         return str(obj.user.username)
 
 
-
 class PostDetailSerializers(ModelSerializer):
-    url = HyperlinkedIdentityField(
-        view_name='detail_api',
-        lookup_field='pk'
-    )
+    created_date = DateTimeField(format="%d.%m.%Y %H:%M:%S")
+    update_date = DateTimeField(format="%d.%m.%Y %H:%M:%S")
 
     class Meta:
         model = Post
         fields = (
-            'url',
-            'id',
-            'author',
-            'title',
-            'text',
-            'published_date'
+            '__all__'
         )
 
 

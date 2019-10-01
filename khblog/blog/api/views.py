@@ -9,11 +9,10 @@ from blog.models import Post
 from .serializers import PostListSerializers, PostDetailSerializers, PostCreateSerializers
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import (
-AllowAny,
-IsAuthenticated,
-IsAdminUser,
-IsAuthenticatedOrReadOnly,
-)
+                                        AllowAny,
+                                        IsAuthenticated,
+                                        IsAdminUser,
+                                        IsAuthenticatedOrReadOnly,)
 from .permission import IsOwnerOrReadOnly
 from django.db.models import Q
 
@@ -31,6 +30,8 @@ class PostListApiView(ListAPIView):
     serializer_class = PostListSerializers
     filter_backends = [SearchFilter]
     search_fields = ['title', 'text']
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get_queryset(self):
         queryset_list = Post.objects.all()
         query = self.request.GET.get('Search', None)
@@ -42,18 +43,19 @@ class PostListApiView(ListAPIView):
         return queryset_list
 
 
-
 class PostUPDATEApiView(RetrieveUpdateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostListSerializers
-    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated]
 
 
 class PostDeleteApiView(DestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostListSerializers
+    permission_classes = [IsAuthenticated]
 
 
 class PostDetailAPIView(RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializers
+    permission_classes = [IsAuthenticated]
