@@ -31,7 +31,6 @@ class Comment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     text = models.TextField(default='')
     created_date = models.DateTimeField(default=timezone.now)
-    approved_comment = models.BooleanField(default=False)
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
 
     class Meta:
@@ -45,10 +44,6 @@ class Comment(models.Model):
         if self.parent is not None:
             return False
         return True
-
-    def approve(self):
-        self.approved_comment = True
-        self.save()
 
     def __str__(self):
         return self.text

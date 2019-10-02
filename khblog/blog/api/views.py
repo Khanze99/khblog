@@ -7,8 +7,12 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView)
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from blog.models import Post
-from .serializers import PostListSerializers, PostDetailSerializers, PostCreateSerializers, PostUpdateSerializer
+from blog.models import Post, Comment
+from .serializers import (PostListSerializers,
+                          PostDetailSerializers,
+                          PostCreateSerializers,
+                          PostUpdateSerializer,
+                          CommentSerializer)
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.permissions import (
                                         AllowAny,
@@ -62,3 +66,12 @@ class PostDetailAPIView(RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializers
     permission_classes = [IsAuthenticated]
+
+
+class CommentListApi(ListAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Comment.objects.filter(post=self.kwargs['pk'])
+        return queryset

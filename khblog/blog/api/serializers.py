@@ -3,7 +3,7 @@ from rest_framework.serializers import (ModelSerializer,
                                         SerializerMethodField,
                                         DateTimeField,
                                         ImageField)
-from blog.models import Post
+from blog.models import Post, Comment
 
 
 class PostCreateSerializers(ModelSerializer):
@@ -19,6 +19,7 @@ class PostCreateSerializers(ModelSerializer):
 
 
 class PostListSerializers(ModelSerializer):
+    comments = HyperlinkedIdentityField(view_name='comments', lookup_field='pk')
     user = SerializerMethodField
     url = HyperlinkedIdentityField(
         view_name='detail_api',
@@ -33,7 +34,8 @@ class PostListSerializers(ModelSerializer):
             'author',
             'id',
             'title',
-            'created_date'
+            'created_date',
+            'comments'
         )
 
     def get_user(self, obj):
@@ -56,6 +58,13 @@ class PostUpdateSerializer(ModelSerializer):
         model = Post
         fields = ('title', 'text')
 
+
+class CommentSerializer(ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = (
+            '__all__'
+        )
 
 
 """
