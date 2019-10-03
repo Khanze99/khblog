@@ -10,6 +10,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from .models import Profile
 from blog.models import Post
+from rest_framework.authtoken.models import Token
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def login_view(request):
@@ -105,3 +107,11 @@ def profiles(request, id):
 def need_login(request):
     return render(request, 'registration/need_login.html')
 
+
+@login_required
+def create_token_for_api(request, uid):
+    try:
+        token = Token.objects.get(user_id=uid)
+    except ObjectDoesNotExist:
+        token = Token.objects.create(user_id=uid)
+    return render(request, 'registration/create_token.html', {'token': token})

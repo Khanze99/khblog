@@ -19,11 +19,12 @@ from rest_framework.permissions import (
                                         IsAuthenticated,
                                         IsAdminUser,
                                         IsAuthenticatedOrReadOnly,)
-from .permission import IsOwnerOrReadOnly
 from django.db.models import Q
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 
 
 class PostCreateApiView(CreateAPIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
     queryset = Post.objects.all()
     serializer_class = PostCreateSerializers
     permission_classes = [IsAuthenticated]
