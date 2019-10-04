@@ -20,11 +20,10 @@ from rest_framework.permissions import (
                                         IsAdminUser,
                                         IsAuthenticatedOrReadOnly,)
 from django.db.models import Q
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication,TokenAuthentication
 
 
 class PostCreateApiView(CreateAPIView):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
     queryset = Post.objects.all()
     serializer_class = PostCreateSerializers
     permission_classes = [IsAuthenticated]
@@ -64,6 +63,7 @@ class PostDeleteApiView(APIView):
 
 
 class PostDetailAPIView(RetrieveAPIView):
+    authentication_classes = [TokenAuthentication]
     queryset = Post.objects.all()
     serializer_class = PostDetailSerializers
     permission_classes = [IsAuthenticated]

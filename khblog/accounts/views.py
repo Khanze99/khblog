@@ -109,9 +109,9 @@ def need_login(request):
 
 
 @login_required
-def create_token_for_api(request, uid):
+def token_for_api(request, uid):
     try:
         token = Token.objects.get(user_id=uid)
     except ObjectDoesNotExist:
         token = Token.objects.create(user_id=uid)
-    return render(request, 'registration/create_token.html', {'token': token})
+    return render(request, 'registration/token.html', {'token': token})
