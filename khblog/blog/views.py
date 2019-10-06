@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from .models import Post, Comment
 from django.utils import timezone
 from .forms import PostForm, CommentForm
@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.authtoken.models import Token
+from django.template import RequestContext
 
 
 def post_list(request):
@@ -227,7 +228,9 @@ def view_404(request):
     :param request:
     :return:
     """
-    return render(request, 'blog/404.html')
+    response = render_to_response(request, 'blog/404.html')
+    response.status_code = 404
+    return response
 
 
 def view_500(request):
@@ -235,4 +238,7 @@ def view_500(request):
     :param request:
     :return:
     """
-    return render(request, 'blog/500.html')
+    response = render(request, 'blog/500.html')
+    response.status_code = 500
+    return response
+
