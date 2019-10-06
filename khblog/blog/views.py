@@ -220,3 +220,19 @@ def reply_comment(request, uid, pk, cid):
     else:
         form = CommentForm()
     return render(request, 'blog/add_comment_to.html', {'form': form})
+
+
+def view_404(request):
+    """
+    :param request:
+    :return:
+    """
+    return render(request, 'blog/404.html')
+
+
+def view_500(request):
+    """
+    :param request:
+    :return:
+    """
+    return render(request, 'blog/500.html')
