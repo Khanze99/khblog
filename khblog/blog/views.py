@@ -10,6 +10,7 @@ from rest_framework.authtoken.models import Token
 from django.template import RequestContext
 
 
+
 def post_list(request):
     search_query = request.GET.get('Search', '')
     if search_query:
@@ -223,22 +224,14 @@ def reply_comment(request, uid, pk, cid):
     return render(request, 'blog/add_comment_to.html', {'form': form})
 
 
-def view_404(request):
-    """
-    :param request:
-    :return:
-    """
-    response = render_to_response(request, 'blog/404.html')
+def view_404(request, *args, **kwargs):
+    response = render_to_response('blog/404.html', context={'user': request.user, 'request': request})
     response.status_code = 404
     return response
 
 
-def view_500(request):
-    """
-    :param request:
-    :return:
-    """
-    response = render(request, 'blog/500.html')
+def view_500(request, *args, **kwargs):
+    response = render_to_response('blog/500.html', context={'user': request.user, 'request': request})
     response.status_code = 500
     return response
 

@@ -8,3 +8,4 @@ db.sqlite3
 .idea/
 data
 bin/database_env
+**/mysite.log
