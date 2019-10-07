@@ -8,4 +8,5 @@ db.sqlite3
 .idea/
 data
 bin/database_env
+bin/for_send_email_env
 **/mysite.log
