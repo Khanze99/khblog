@@ -10,7 +10,6 @@ from rest_framework.authtoken.models import Token
 from django.template import RequestContext
 
 
-
 def post_list(request):
     search_query = request.GET.get('Search', '')
     if search_query:
@@ -240,3 +239,9 @@ def view_403(request, *args, **kwargs):
     response = render_to_response('blog/403.html', context={'user': request.user, 'request': request})
     response.status_code = 403
     return response
+
+
+def about_admin(request):
+    admin = User.objects.get(id=1)
+    posts = Post.objects.filter(id=1)
+    return render(request, 'blog/about_admin.html', {'admin': admin, 'posts': posts})

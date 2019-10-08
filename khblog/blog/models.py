@@ -21,6 +21,7 @@ class Post(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     update_date = models.DateTimeField(auto_now=True, auto_now_add=False)
     view = models.IntegerField(default=0, verbose_name='views')
+    bio = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.title

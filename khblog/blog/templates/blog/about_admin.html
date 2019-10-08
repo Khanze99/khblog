@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-selection" style="padding: 10px; Display:flex;Flex-direction: row;">
+        <div>
+        <img class="img-thumbnail" src="{{ admin.profile.image.url }}" width="300" height="300">
+                            <h2 class="account-heading">{{ admin.username }}</h2>
+                <a href="https://github.com/Khanze99">github</a>
+                <a href="https://vk.com/khamidov_a">vk</a>
+                <a href="https://www.youtube.com/c/Khanze">youtube</a>
+                <p>{{ admin.email }}</p>
+            </div>
+            <h2>bio</h2>
+            <p>{{ admin.bio }}</p>
+            <a href="{% url 'user_posts' id=admin.id %}" ><span class="btn btn-blue" style="color: white; background: #4682B4;">Admin posts</span></a>
+
+        </div>
+
+
+
+
+{% endblock content%}
