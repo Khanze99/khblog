@@ -235,3 +235,8 @@ def view_500(request, *args, **kwargs):
     response.status_code = 500
     return response
 
+
+def view_403(request, *args, **kwargs):
+    response = render_to_response('blog/403.html', context={'user': request.user, 'request': request})
+    response.status_code = 403
+    return response
