@@ -18,6 +18,4 @@ urlpatterns = [
     path('post/<int:pk>/<int:id>/dislike', views.post_dislike, name='post_dislike'),
     path('post/liked_posts/<int:id>', views.get_liked_post, name='liked_posts'),
     path('post/user_posts/<int:id>', views.get_user_posts, name='user_posts'),
-    path('khamidov/', views.about_admin, name='khamidov')
-
 ]

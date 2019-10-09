@@ -13,6 +13,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default-medium.png', upload_to=upload_profile)
     city = models.CharField(default='-', max_length=32)
+    bio = models.TextField(null=True, blank=True)
+    github_link = models.CharField(null=True, max_length=50)
 
     def __str__(self):
         return f'Profile {self.user.username}'

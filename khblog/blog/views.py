@@ -240,8 +240,3 @@ def view_403(request, *args, **kwargs):
     response.status_code = 403
     return response
 
-
-def about_admin(request):
-    admin = User.objects.get(id=1)
-    posts = Post.objects.filter(id=1)
-    return render(request, 'blog/about_admin.html', {'admin': admin, 'posts': posts})

@@ -10,13 +10,13 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email',)
+        fields = ('username', 'email')
 
 
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('image', 'city')
+        fields = ('image', 'city', 'bio', 'github_link')
 
 
 class UserLoginForm(forms.Form):
