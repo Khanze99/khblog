@@ -4,13 +4,17 @@
         <div>
         <img class="img-thumbnail" src="{{ user.profile.image.url }}" width="300" height="300">
                 <h2 class="account-heading">Username: {{ user.username }}</h2>
+                            <p>posts: <a href="{% url 'user_posts' id=user.id%}">{{ posts.count }}</a></p>
+
             </div>
             <div style="padding: 10px;">
                 <h1>Profile info</h1>
                 <p>Email: {{ user.email }}</p>
                 <p>City: {{user.profile.city}}</p>
                 <p>root: {{user.is_staff}}</p>
-                <p>posts: <a href="{% url 'user_posts' id=user.id%}">{{ posts.count }}</a></p>
+                <p>github: {{user.profile.github_link}}</p>
+                <h2>bio</h2>
+                <p>{{user.profile.bio}}</p>
             </div>
         </div>
 {% endblock content%}
