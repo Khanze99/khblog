@@ -5,6 +5,8 @@ services:
     image: postgres:10
     env_file:
       - ./bin/database_env
+      - ./bin/for_send_email_env
+
     volumes:
       - db_volume:/var/lib/postgresql/data
     networks:
@@ -19,6 +21,7 @@ services:
     command: sh -c "cd khblog && gunicorn --bind 0.0.0.0:8000 mysite.wsgi"
     env_file:
       - ./bin/database_env
+      - ./bin/for_send_email_env
     volumes:
       - ./static:/khblog/khblog/static
       - ./media:/khblog/khblog/media
