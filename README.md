@@ -1,26 +1,33 @@
 # khblog
 
-Итак у нас имеетсся проект на гитхабе. Django, nginx, docker, postgresql.
+We have project on github -> Django, nginx, docker, postgresql.
 
-Развертываем на сервере(облаке).
+Deploy on the server(cloud)
 
-Создаем сервер, покупаем
+create ssh-key
 
+$ ssh-keygen
 
-ssh-keygen для ssh ключа с подключением через него
+copy ssh-key on the site where you buy vps
 
-~/.ssh/id_rsa.pub здесь ключ и копируем его в настройках для подключения к серверу на сервисе, где берете VPS
+~/.ssh/id_rsa.pub
 
-Подключаемся к серверу ssh root@ip.ip.ip.ip
+connect to the server $ ssh root@ip.ip.ip.ip
 
-клонируем репозиторий git clone
+install git
+$ apt-get install git
 
-устанавливаем docker https://www.digitalocean.com/community/tutorials/docker-ubuntu-18-04-1-ru
+clone the repository
+$ git clone
 
-устанавливаем docker-compose https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-16-04
+install docker https://www.digitalocean.com/community/tutorials/docker-ubuntu-18-04-1-ru
 
-устанавливаем nginx $ apt-get install nginx
+install docker-compose https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-16-04
 
-запускаем билдинг docker-compose up --build path to docker-compose.yaml
+install nginx
+$ apt-get install nginx
+
+launch
+$ docker-compose up --build path to docker-compose.yaml
 
 
