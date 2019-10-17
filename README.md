@@ -1,4 +1,4 @@
-[khblog](http://www.khanze.com)
+h1 <http://www.khanze.com>
 
 h1 About project
 =====================
