@@ -1,33 +1,13 @@
-# khblog
+khblog
 
-We have project on github -> Django, nginx, docker, postgresql.
+khanze.com
 
-Deploy on the server(cloud)
+A project has been implemented so that people share knowledge and learn something new. The user can create a post that can be commented on and rated.
 
-create ssh-key
+The project has an authentication and authorization system, a post and comment model, likes and dislikes are implemented, as well as a profile model.
 
-$ ssh-keygen
+Access to the API through the token generated in the application.
 
-copy ssh-key on the site where you buy vps
+When registering, a notification comes from the application to the mail that you wrote when filling in the data.
 
-~/.ssh/id_rsa.pub
-
-connect to the server $ ssh root@ip.ip.ip.ip
-
-install git
-$ apt-get install git
-
-clone the repository
-$ git clone
-
-install docker https://www.digitalocean.com/community/tutorials/docker-ubuntu-18-04-1-ru
-
-install docker-compose https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-16-04
-
-install nginx
-$ apt-get install nginx
-
-launch
-$ docker-compose up --build path to docker-compose.yaml
-
-
+Search for posts by title and context of the post has been implemented.
