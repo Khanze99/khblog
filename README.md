@@ -1,6 +1,4 @@
-khblog
-***
-khanze.com
+[khblog](http://www.khanze.com)
 ***
 A project has been implemented so that people share knowledge and learn something new. The user can create a post that can be commented on and rated.
 ***
