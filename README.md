@@ -1,4 +1,4 @@
-[Computer Science Blog](http://www.khanze.com>)
+[Computer Science Blog](http://www.khanze.com)
 =====================
 
 About project
