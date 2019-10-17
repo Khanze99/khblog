@@ -1,6 +1,7 @@
 [khblog](http://www.khanze.com)
 
 h1 About project
+=====================
 ---
 A project has been implemented so that people share knowledge and learn something new. The user can create a post that can be commented on and rated.
 ***
