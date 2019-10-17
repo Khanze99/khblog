@@ -12,6 +12,9 @@ The project has an:
 + likes
 + dislikes
 + profile model
++ search
++ reply comment
++ reset password
 
 
 
