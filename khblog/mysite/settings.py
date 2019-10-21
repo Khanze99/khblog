@@ -94,6 +94,7 @@ DATABASES = {
         'NAME': os.getenv("POSTGRES_DB"),
         'USER': os.getenv("POSTGRES_USER"),
         'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
+        'HOST': 'db',
         'PORT': 5432,
     }
 }
@@ -140,6 +141,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+ACCESS_TOKEN_VK = '***'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

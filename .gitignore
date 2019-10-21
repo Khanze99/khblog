@@ -9,4 +9,5 @@ db.sqlite3
 data
 bin/database_env
 bin/for_send_email_env
+bin/vk_data_env
 **/mysite.log

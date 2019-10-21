@@ -6,9 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.authtoken.models import Token
-from django.template import RequestContext
-
+from .tasks import send_post
 
 def post_list(request):
     search_query = request.GET.get('Search', '')
@@ -50,6 +48,8 @@ def post_new(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
+            if post.author.username == 'khanze':
+                send_post(post.id)
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
