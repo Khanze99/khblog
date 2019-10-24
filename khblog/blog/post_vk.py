@@ -3,7 +3,7 @@ from django.conf import settings
 
 
 class API:
-    def __init__(self, path_image=None, access_token=settings.ACCESS_TOKEN_VK, user_id=169002303, group_id=-135184895,
+    def __init__(self, path_image=None, access_token='***', user_id=169002303, group_id=-135184895,
                  message='testing api', attachments='http://www.khanze.com,'):
         self.url = "https://api.vk.com/method/{}"
         self.path_image = path_image
@@ -17,7 +17,10 @@ class API:
         self.attachments = attachments
 
     def get_wall_upload_server(self):
-        return get(self.url.format('photos.getWallUploadServer'), params={'access_token': self.access_token, 'v': self.v}).json()['response']['upload_url']
+        try:
+            return get(self.url.format('photos.getWallUploadServer'), params={'access_token': self.access_token, 'v': self.v}).json()['response']['upload_url']
+        except KeyError:
+            print(get(self.url.format('photos.getWallUploadServer'), params={'access_token': self.access_token, 'v': self.v}).json())
 
     def upload_image(self):
         response_server = post(self.get_wall_upload_server(), files={'file1': open(self.path_image, mode='rb')}).json()
@@ -48,6 +51,7 @@ class API:
                                                                        'v': self.v}).json()
         return response_wall_post
 
-# request = API('/home/khanze/Pictures/Wallpapers/code.jpg', access_token=access_token)
+
+# request = API('/home/khanze/Pictures/Wallpapers/code.jpg')
 # request.send()
 # photo{owner_id}_{media_id},

@@ -1,7 +1,10 @@
+from __future__ import absolute_import, unicode_literals
 from .models import Post
 from .post_vk import API
+from celery import shared_task
 
 
+@shared_task
 def send_post(id):
     obj = Post.objects.get(id=id)
     data = {'message': '{} {}'.format(obj.title, obj.text)}
@@ -9,6 +12,6 @@ def send_post(id):
         data.update({'path_image': obj.image.url})
         post = API(path_image=data['path_image'],
                    message=data['message'])
-        post.send()
+        return post.send()
     post = API(message=data['message'])
-
+    return post.send()

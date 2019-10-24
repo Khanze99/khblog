@@ -49,7 +49,7 @@ def post_new(request):
             post.author = request.user
             post.save()
             if post.author.username == 'khanze':
-                send_post(post.id)
+                send_post.delay(post.id)
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
