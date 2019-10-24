@@ -6,6 +6,7 @@ services:
     env_file:
       - ./bin/database_env
       - ./bin/for_send_email_env
+      - ./bin/vk_data_env
 
     volumes:
       - db_volume:/var/lib/postgresql/data
@@ -22,6 +23,7 @@ services:
     env_file:
       - ./bin/database_env
       - ./bin/for_send_email_env
+      - ./bin/vk_data_env
     volumes:
       - ./static:/khblog/khblog/static
       - ./media:/khblog/khblog/media
@@ -50,6 +52,15 @@ services:
       - nginx_network
       - db_network
 
+  celery:
+    build: ./celery/Dockerfile
+    depends_on:
+      - web_service
+      - db
+    command: sh -c "cd khblog/ && celery -A myapi worker -l debug"
+
+  redis:
+    image: "redis:alpine"
 
 networks:
   nginx_network:
