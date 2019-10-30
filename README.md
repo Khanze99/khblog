@@ -16,6 +16,9 @@ The project has an:
 + reply comment
 + reset password
 
+Add new function:
++ When post to a blog, the data is transferred to VK api and post to the group [https://vk.com/computerscienceblog]
+
 
 
 Access to the API through the token generated in the application. When registering, a notification comes from the application to the mail that you wrote when filling in the data. Search for posts by title and context of the post has been implemented.

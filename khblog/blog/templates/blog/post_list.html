@@ -2,8 +2,8 @@
 
     {% block content%}
             {% for post in posts %}
-                <article class="media content-section">
-                <div>
+                <article class="media content-section"><span class="border-top-0">
+                <div class="post_wrapper">
                     <div>
                     <h1>
                         <a href="{% url 'profiles' id=post.author.id %}"><img class="img-thumbnail" src="{{ post.author.profile.image.url }}" width="100px" height="100px"></a>
@@ -19,6 +19,6 @@
 
                     </div>
                 </div>
-                    </article>
+                    </span></article>
             {% endfor %}
     {% endblock %}

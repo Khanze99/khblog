@@ -7,7 +7,7 @@ from celery import shared_task
 @shared_task
 def send_post(id):
     obj = Post.objects.get(id=id)
-    data = {'message': '{} {}'.format(obj.title, obj.text)}
+    data = {'message': '{} \n {}'.format(obj.title, obj.text)}
     if obj.image:
         data.update({'path_image': obj.image.url})
         post = API(path_image=data['path_image'],

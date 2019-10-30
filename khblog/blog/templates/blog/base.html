@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>夢</title>
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
@@ -25,9 +25,15 @@
         <a href="{% url 'register_view' %}"><span class="btn btn-light" style="color: 4682B4;">Sign up</span></a>
         {% endif %}
     </div>
-    <div class="container col-xs-12 col-md-10" style="padding-left: 30px;">
-        <div class="row">
-            <div class="col-md-8">
+    <div style="
+    width: 80%;
+    margin: auto;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;">
+        <div >
+            <div>
             {% block content %}
             {% endblock %}
             </div>

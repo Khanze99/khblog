@@ -85,7 +85,7 @@ def profile(request):
             messages.success(request, f'Your profile has been updated')
             return redirect('profile')
     else:
-        users = len(User.objects.all())
+        users = User.objects.all().count()
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
     context = {
@@ -110,8 +110,6 @@ def need_login(request):
 
 @login_required
 def token_for_api(request, uid):
-    try:
-        token = Token.objects.get(user_id=uid)
-    except ObjectDoesNotExist:
-        token = Token.objects.create(user_id=uid)
+    user = User.objects.get(id=uid)
+    token = Token.objects.get_or_create(user=user)[0]
     return render(request, 'registration/token.html', {'token': token})
