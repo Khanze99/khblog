@@ -17,7 +17,7 @@ The project has an:
 + reset password
 
 Add new function:
-+ When post to a blog, the data is transferred to VK api and post to the group [https://vk.com/computerscienceblog]
++ When post to a blog, the data is transferred to VK api and post to the group [https://vk.com/computerscienceblog](CSB | Computer Science Blog)
 
 
 
