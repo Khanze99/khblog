@@ -3,7 +3,7 @@ from django.conf import settings
 
 
 class API:
-    def __init__(self, path_image=None, access_token='***', user_id=169002303, group_id=-135184895,
+    def __init__(self, path_image=None, access_token=settings.ACCESS_TOKEN_VK, user_id=169002303, group_id=-135184895,
                  message='testing api', attachments='http://www.khanze.com,'):
         self.url = "https://api.vk.com/method/{}"
         self.path_image = path_image

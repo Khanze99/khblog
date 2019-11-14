@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'jl)&#!6x(oguv2c4%&y&$lw&phhlh@n#)d(*zth-*pw%l5gg+4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -143,7 +143,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-ACCESS_TOKEN_VK = '***'
+ACCESS_TOKEN_VK = os.getenv('ACCESS_TOKEN_VK')
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

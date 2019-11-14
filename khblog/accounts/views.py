@@ -5,13 +5,12 @@ from django.db import IntegrityError
 from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.models import User
 from .models import Profile
 from blog.models import Post
 from rest_framework.authtoken.models import Token
-from django.core.exceptions import ObjectDoesNotExist
+from .tasks import send_to_mail_user, send_mail_pass
 
 
 def login_view(request):
@@ -36,11 +35,7 @@ def register_view(request):
             user = form.save(commit=False)
             password = form.cleaned_data.get('password')
             email = form.cleaned_data.get('email')
-            send_mail(subject="Welcome {}! to blog".format(user), message=settings.EMAIL_MESSAGE,
-                      from_email=settings.DEFAULT_FROM_EMAIL,
-                      recipient_list=[email],
-                      auth_user=settings.EMAIL_HOST_USER,
-                      auth_password=settings.EMAIL_HOST_PASSWORD)
+            send_to_mail_user.delay(user.username, email)
             user.set_password(password)
             user.save()
             new_user = authenticate(username=user.username, password=password)
@@ -74,15 +69,9 @@ def profile(request):
             id = request.user.id
             user_info = User.objects.get(id=id)
             if email != user_info.email:
-                send_mail(subject="{}! Update your info".format(username), message='''You changed your information about you.
-                Respectfully''',
-                          from_email=settings.DEFAULT_FROM_EMAIL,
-                          recipient_list=[email],
-                          auth_user=settings.EMAIL_HOST_USER,
-                          auth_password=settings.EMAIL_HOST_PASSWORD)
+                send_mail_pass.delay(username, email)
             u_form.save()
             p_form.save()
-            messages.success(request, f'Your profile has been updated')
             return redirect('profile')
     else:
         users = User.objects.all().count()
