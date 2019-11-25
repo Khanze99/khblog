@@ -68,7 +68,7 @@ def profile(request):
             username = u_form.cleaned_data.get("username")
             id = request.user.id
             user_info = User.objects.get(id=id)
-            if email != user_info.email:
+            if email == user_info.email:
                 send_mail_pass.delay(username, email)
             u_form.save()
             p_form.save()

@@ -29,4 +29,3 @@ $ apt-get install nginx
 launch
 $ docker-compose up --build path to docker-compose.yaml
 
-

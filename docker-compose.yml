@@ -12,6 +12,8 @@ services:
       - db_volume:/var/lib/postgresql/data
     networks:
       - db_network
+    expose:
+      - 5432
     ports:
       - "5432:5432"
 
@@ -29,6 +31,7 @@ services:
       - ./media:/khblog/khblog/media
     depends_on:
       - db
+      - redis
     expose:
       - "8000"
     links:
@@ -53,20 +56,41 @@ services:
       - db_network
 
   celery:
-    build:
-      context: ./celery/Dockerfile
+    build: .
+    env_file:
+      - ./bin/database_env
+      - ./bin/for_send_email_env
+      - ./bin/vk_data_env
     depends_on:
       - web_service
       - db
-    command: sh -c "cd khblog/ && celery -A myapi worker -l debug"
+      - redis
+    command: sh -c "cd khblog && celery -A mysite worker -l debug"
+    volumes:
+      - ./media:/khblog/khblog/media
+    networks:
+      - celery_network
+      - redis_network
+      - db_network
 
   redis:
-    image: "redis:alpine"
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - db_network
+      - celery_network
+      - redis_network
+
 
 networks:
   nginx_network:
     driver: bridge
   db_network:
+    driver: bridge
+  celery_network:
+    driver: bridge
+  redis_network:
     driver: bridge
 
 volumes:
