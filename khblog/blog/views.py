@@ -48,7 +48,7 @@ def post_new(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            if post.author.username == 'khanze':
+            if post.author.is_staff is True:
                 send_post.delay(post.id)
             return redirect('post_detail', pk=post.pk)
     else:
