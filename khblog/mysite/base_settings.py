@@ -96,7 +96,7 @@ DATABASES = {
         'NAME': os.getenv("POSTGRES_DB"),
         'USER': os.getenv("POSTGRES_USER"),
         'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
-        'HOST': 'db',
+        'HOST': os.getenv('DB'),
         'PORT': 5432,
     }
 }
@@ -153,7 +153,7 @@ EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
-EMAIL_MESSAGE = "Hello my friend, in this blog you can share your news and learn new things from other registration. Thank you for being with us"
+EMAIL_MESSAGE = "Hello {user}, traveling creature. Thank you f or joining our guild. Here you will learn a lot and will be able to share with us your story or experience that happened in your life."
 
 
 LOGGING = {
@@ -172,7 +172,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'mysite.log',
+            'filename': 'logs.log',
             'formatter': 'verbose'
         },
     },

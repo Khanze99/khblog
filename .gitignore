@@ -10,4 +10,5 @@ data
 bin/database_env
 bin/for_send_email_env
 bin/vk_data_env
-**/mysite.log
+**/logs.log
+**/settings.py

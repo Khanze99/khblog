@@ -33,12 +33,13 @@
     display: flex;
     justify-content: center;
     flex-direction: column;">
-        <div >
-            <div>
             {% block content %}
             {% endblock %}
-            </div>
-        </div>
     </div>
+    <footer>
+        <div style="padding-left: 25px; padding-right: 25px;">
+            <p style="color: 4682B4; float: left;">Powered by Nginx</p><p style="color: 4682B4; text-align: right;">Created by Django2, Python3, PostgreSQL, Docker</p>
+        </div>
+    </footer>
 </body>
 </html>

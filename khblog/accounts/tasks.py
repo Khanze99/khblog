@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 
 @shared_task
 def send_to_mail_user(user, email):
-    send_mail(subject="Welcome {}! to blog".format(user), message=settings.EMAIL_MESSAGE,
+    send_mail(subject="Welcome {}! to blog".format(user), message=settings.EMAIL_MESSAGE.format(user=user),
               from_email=settings.DEFAULT_FROM_EMAIL,
               recipient_list=[email],
               auth_user=settings.EMAIL_HOST_USER,

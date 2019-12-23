@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect, render_to_response
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from .models import Post, Comment
 from django.utils import timezone
 from .forms import PostForm, CommentForm
@@ -7,6 +8,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from .tasks import send_post
+
 
 def post_list(request):
     search_query = request.GET.get('Search', '')
@@ -43,6 +45,7 @@ def post_detail(request, pk):
 @login_required
 def post_new(request):
     if request.method == "POST":
+        
         form = PostForm(request.POST, request.FILES or None)
         if form.is_valid():
             post = form.save(commit=False)
