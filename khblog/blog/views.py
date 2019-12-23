@@ -14,9 +14,12 @@ def post_list(request):
     search_query = request.GET.get('Search', '')
     if search_query:
         posts = Post.objects.filter(Q(title__icontains=search_query) |
-                                    Q(text__icontains=search_query)).order_by('-created_date')
+                                    Q(text__icontains=search_query))
     else:
-        posts = Post.objects.filter(created_date__lte=timezone.now()).order_by('-created_date')
+        posts = Post.objects.filter(created_date__lte=timezone.now())
+    paginator = Paginator(posts, 7)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 
