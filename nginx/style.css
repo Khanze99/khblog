@@ -1,0 +1,52 @@
+.xmas {
+ height: 100%;
+ width: 100%;
+ position: relative;
+ background: black;
+}
+.xmas .xmas-message {
+ position: absolute;
+ left: 50%;
+ top: 50%;
+ z-index: 2;
+ -ms-transform: translate(-50%, -50%);
+ -webkit-transform: translate(-50%, -50%);
+ transform: translate(-50%, -50%);
+ width: calc(90% - 6rem);
+ height: calc(100% - 12rem);
+ margin: 0 auto;
+}
+.xmas .from {
+ position: absolute;
+ bottom: 40px;
+ width: 100%;
+ z-index: 3;
+ text-align: center;
+}
+.xmas .from div {
+ font-family: "quimby-mayoral", sans-serif;
+ color: #ffffff;
+ font-size: 40px;
+ margin-bottom: 10px;
+}
+.xmas .from .gc-link {
+ display: inline-block;
+ font-family: "brandon-grotesque", sans-serif;
+ font-size: 24px;
+ color: #ffffff;
+ -webkit-transition: 400ms ease;
+ transition: 400ms ease;
+ text-decoration: none;
+ text-transform: uppercase;
+}
+.xmas .from .gc-link:hover {
+ color: #1cff94;
+}
+.xmas #xmas {
+ width: 100%;
+ height: 100%;
+ position: relative;
+ z-index: 2;
+}
+
+background: url("https://wp-lessons.com/wp-content/uploads/2014/12/xmas-large.jpg") no-repeat 0 0/cover;

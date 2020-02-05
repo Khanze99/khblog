@@ -25,6 +25,12 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_liked_by(self):
+        return ", ".join([user.username for user in self.liked_by.all()])
+
+    def get_disliked_by(self):
+        return ", ".join([user.username for user in self.disliked_by.all()])
+
     class Meta:
         ordering = ['-created_date']
 

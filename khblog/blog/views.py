@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect, render_to_response
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.paginator import Paginator
 from .models import Post, Comment
 from django.utils import timezone
 from .forms import PostForm, CommentForm
@@ -16,7 +16,7 @@ def post_list(request):
         posts = Post.objects.filter(Q(title__icontains=search_query) |
                                     Q(text__icontains=search_query))
     else:
-        posts = Post.objects.filter(created_date__lte=timezone.now())
+        posts = Post.objects.all().order_by('-created_date')
     paginator = Paginator(posts, 7)
     page = request.GET.get('page')
     posts = paginator.get_page(page)

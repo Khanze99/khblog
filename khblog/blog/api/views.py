@@ -20,10 +20,7 @@ from rest_framework.permissions import (
                                         IsAdminUser,
                                         IsAuthenticatedOrReadOnly)
 from django.db.models import Q
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication,TokenAuthentication
-from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.authtoken.models import Token
-
+from rest_framework.authentication import TokenAuthentication
 
 
 class PostCreateApiView(CreateAPIView):
@@ -79,3 +76,4 @@ class CommentListApi(ListAPIView):
     def get_queryset(self):
         queryset = Comment.objects.filter(post=self.kwargs['pk'])
         return queryset
+

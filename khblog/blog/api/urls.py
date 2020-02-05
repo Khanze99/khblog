@@ -13,5 +13,5 @@ urlpatterns = [
     path('api/posts/<int:pk>/update/', PostUPDATEApiView.as_view(), name='update'),
     path('api/posts/<int:pk>/delete/', PostDeleteApiView.as_view(), name='delete'),
     path('api/posts/create/', PostCreateApiView.as_view(), name='create'),
-    path('api/posts/<int:pk>/comments/', CommentListApi.as_view(), name='comments')
+    path('api/posts/<int:pk>/comments/', CommentListApi.as_view(), name='comments'),
 ]
