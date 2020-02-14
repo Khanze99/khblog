@@ -24,19 +24,23 @@ class PostAdmin(admin.ModelAdmin):
     inlines = (CommentsInline, )
 
     def get_urls(self):
+        # Расширяем юрлы для админки через вложение модели
         urls = super().get_urls()
         custom_urls = [
-            path('permissions/<int:pk>/', self.get_permissions)
+            path('permissions/<int:pk>/', self.get_permissions, name='test')
         ]
         return custom_urls + urls
 
     def custom_button(self, obj):
+        # Создаем кнопку для каждого объекта на странице html
         link = f'<a class="button" href="permissions/{obj.id}/">TEST</a>'
         return format_html(link)
     custom_button.short_description = 'TEST'
 
     def get_permissions(self, request, pk):
+        # Тут будет происходить вся логика к которому мы будет оправлять запросы с формы
         print(pk)
+        obj = Post.objects.get(pk=pk)
         form = ProfilesForm()
-        return render(request, 'accounts/fo_form.html', {'form': form})
+        return render(request, 'admin/blog/test.html', {'form': form, 'obj': obj})
 
