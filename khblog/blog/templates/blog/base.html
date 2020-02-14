@@ -7,11 +7,13 @@
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>
     </head>
     <body>
     <div class="page-header">
         <h1 style="text-align:center;"><a href="/">Computer Science Blog</a></h1>
         {% if user.is_authenticated %}
+        <script src="{% static 'blog/search.js' %}"></script>
         <form class="form-inline md-form form-sm top-menu row" action="{% url 'post_list'%}" id="search-form" method="GET">
             <input class="form-control form-control-sm mr-2 w-75 row" type="text" placeholder="Search" aria-label="Search"
             name="Search">

@@ -1,15 +1,16 @@
-from django.contrib.auth import authenticate, get_user_model, login, logout
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
-from .forms import UserLoginForm, UserRegisterForm, ChangePassword
 from django.db import IntegrityError
-from .forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+
+
+from .forms import UserLoginForm, UserRegisterForm, ChangePassword, UserUpdateForm, ProfileUpdateForm, ProfilesForm
 from .models import Profile
 from blog.models import Post
-from rest_framework.authtoken.models import Token
 from .tasks import send_to_mail_user, send_mail_pass
 
 

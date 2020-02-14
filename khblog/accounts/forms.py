@@ -1,8 +1,8 @@
 from django import forms
 from django.contrib.auth import authenticate, get_user_model, login, logout
-from .models import Profile
+from django.contrib.auth.models import User
 
-User = get_user_model()
+from .models import Profile
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -66,3 +66,10 @@ class UserRegisterForm(forms.ModelForm):
 class ChangePassword(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, label='Confirm password')
 
+
+class ProfilesForm(forms.Form):
+    names = forms.ModelChoiceField(queryset=User.objects.all().order_by('username'))
+
+
+class ResourceTypes(forms.Form):
+    types = forms.ChoiceField(required=[])

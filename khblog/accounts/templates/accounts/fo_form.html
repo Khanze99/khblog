@@ -1,0 +1,16 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_modify %}
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; Permissions
+</div>
+{% endblock %}
+
+{% block content %}
+    <form method="GET" action="">
+        {% csrf_token %}
+        {{ form }}
+        <input type="button" value="TEST">
+    </form>
+{% endblock %}
