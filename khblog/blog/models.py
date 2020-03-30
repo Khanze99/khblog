@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 def upload_location(instance, filename):
-    return "post/{}".format(filename)
+    return "post/{id}_{filename}".format(id=instance.id, filename=filename)
 
 
 class Post(models.Model):

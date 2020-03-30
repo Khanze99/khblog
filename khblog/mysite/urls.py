@@ -23,6 +23,9 @@ handler404 = 'blog.views.view_404'
 handler500 = 'blog.views.view_500'
 handler403 = 'blog.views.view_403'
 
+admin.autodiscover()
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
