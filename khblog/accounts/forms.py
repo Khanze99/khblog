@@ -69,7 +69,3 @@ class ChangePassword(forms.Form):
 
 class ProfilesForm(forms.Form):
     names = forms.ModelChoiceField(queryset=User.objects.all().order_by('username'))
-
-
-class ResourceTypes(forms.Form):
-    types = forms.ChoiceField(required=[])

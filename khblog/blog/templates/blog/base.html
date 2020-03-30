@@ -4,27 +4,27 @@
         <title>夢</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
+        <script type="text/javascript" src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.6.4'></script>
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.js"></script>
+        <script src="{% static 'js/main.js'%}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     </head>
     <body>
     <div class="page-header">
         <h1 style="text-align:center;"><a href="/">Computer Science Blog</a></h1>
         {% if user.is_authenticated %}
-        <script src="{% static 'blog/search.js' %}"></script>
-        <form class="form-inline md-form form-sm top-menu row" action="{% url 'post_list'%}" id="search-form" method="GET">
-            <input class="form-control form-control-sm mr-2 w-75 row" type="text" placeholder="Search" aria-label="Search"
+        <form class="form-inline md-form form-sm top-menu row" id="search-form" method="GET" action="/">
+            <input class="form-control form-control-sm mr-2 w-75 row" id="text-input" type="text" placeholder="Search" aria-label="Search"
             name="Search">
-            <button class="btn btn-light" type="submit" style="color: 4682B4;">Search</button>
+            <input class="btn btn-light" type="button" onclick="getRequest()" style="color: 4682B4;" value="Search">
         </form>
             <a href="{% url 'logout_view' %}"><span class="btn btn-light" style="color: 4682B4;">Logout</span></a>
             <a href="{% url 'profile' %}"><span class="btn btn-light" style="color:4682B4;">{{request.user}}</span></a>
             <a href="{% url 'post_new' %}"><span class="btn btn-light" style="color: 4682B4;">New post</span></a>
         {% else %}
-        <a href="{% url 'login_view' %}"><span class="btn btn-light" style="color: 4682B4;">Login</span></a>
-        <a href="{% url 'register_view' %}"><span class="btn btn-light" style="color: 4682B4;">Sign up</span></a>
+            <a href="{% url 'login_view' %}"><span class="btn btn-light" style="color: 4682B4;">Login</span></a>
+            <a href="{% url 'register_view' %}"><span class="btn btn-light" style="color: 4682B4;">Sign up</span></a>
         {% endif %}
     </div>
     <div style="
@@ -43,5 +43,5 @@
             <p style="color: 4682B4; float: left;">Powered by Nginx 2019</p><p style="color: 4682B4; text-align: right;">Created by Django2, Python3, PostgreSQL, Docker</p>
         </div>
     </footer>
-</body>
+    </body>
 </html>

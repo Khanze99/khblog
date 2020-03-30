@@ -1,0 +1,10 @@
+{% extends "admin/base_site.html"%}
+{% load i18n admin_urls %}
+
+{% block content %}
+    <form action="{% url 'admin:test' pk=obj.pk%}" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Button">
+    </form>
+{% endblock %}

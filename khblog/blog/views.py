@@ -1,13 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from django.core.paginator import Paginator
-from .models import Post, Comment
-from django.utils import timezone
-from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from .tasks import send_post
+
+from .models import Post, Comment
+from .forms import PostForm, CommentForm
 
 
 def post_list(request):
@@ -54,8 +53,6 @@ def post_new(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            if post.author.is_staff is True:
-                send_post.delay(post.id)
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
@@ -245,4 +242,3 @@ def view_403(request, *args, **kwargs):
     response = render_to_response('blog/403.html', context={'user': request.user, 'request': request})
     response.status_code = 403
     return response
-
