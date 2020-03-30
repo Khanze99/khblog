@@ -13,7 +13,7 @@ class API:
         self.user_id = user_id
         self.group_id = group_id
         self.access_token = access_token
-        self.v = 5.50
+        self.v = 5.52
         self.message = message
         self.attachments = attachments
 
@@ -24,8 +24,9 @@ class API:
             print(get(self.url.format('photos.getWallUploadServer'), params={'access_token': self.access_token, 'v': self.v}).json())
 
     def upload_image(self):
-        response_server = post(self.get_wall_upload_server(), files={'file1': open(self.path_image, mode='rb')}).json()
-        return response_server
+        response_server = post(self.get_wall_upload_server(), files={'file1': open(self.path_image, mode='rb')})
+        print(response_server.json())
+        return response_server.json()
 
     def save_wall_photo(self):
         upload_info = self.upload_image()
