@@ -24,9 +24,8 @@ class API:
             print(get(self.url.format('photos.getWallUploadServer'), params={'access_token': self.access_token, 'v': self.v}).json())
 
     def upload_image(self):
-        response_server = post(self.get_wall_upload_server(), files={'file1': open(self.path_image, mode='rb')})
-        print(response_server.json())
-        return response_server.json()
+        response_server = post(self.get_wall_upload_server(), files={'file1': open(self.path_image, mode='rb')}).json()
+        return response_server
 
     def save_wall_photo(self):
         upload_info = self.upload_image()
