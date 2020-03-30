@@ -242,17 +242,3 @@ def view_403(request, *args, **kwargs):
     response = render_to_response('blog/403.html', context={'user': request.user, 'request': request})
     response.status_code = 403
     return response
-
-
-def test(request):
-    search_query = request.GET.get('Search', '')
-    if search_query:
-        posts = Post.objects.filter(Q(title__icontains=search_query) |
-                                    Q(text__icontains=search_query))
-    else:
-        posts = Post.objects.all().order_by('-created_date')
-    paginator = Paginator(posts, 7)
-    page = request.GET.get('page')
-    posts = paginator.get_page(page)
-    return render(request, 'blog/chert.html', {'posts': posts})
-

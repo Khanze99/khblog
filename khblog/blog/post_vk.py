@@ -1,4 +1,5 @@
 from requests import get, post
+
 from django.conf import settings
 
 
@@ -51,7 +52,3 @@ class API:
                                                                        'v': self.v}).json()
         return response_wall_post
 
-
-# request = API('/home/khanze/Pictures/Wallpapers/code.jpg')
-# request.send()
-# photo{owner_id}_{media_id},

@@ -23,8 +23,6 @@ handler404 = 'blog.views.view_404'
 handler500 = 'blog.views.view_500'
 handler403 = 'blog.views.view_403'
 
-admin.autodiscover()
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,9 +34,3 @@ urlpatterns = [
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-# if settings.DEBUG:
-#     import debug_toolbar
-#     urlpatterns = [
-#         path('__debug__/', include(debug_toolbar.urls))
-#     ] + urlpatterns
