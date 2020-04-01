@@ -1,26 +1,27 @@
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
-    UpdateAPIView,
-    DestroyAPIView,
     CreateAPIView,
     RetrieveUpdateAPIView)
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter
+from rest_framework.permissions import (
+                                        IsAuthenticated,
+                                        IsAuthenticatedOrReadOnly,
+                                        IsAdminUser)
+from django.db.models import Q
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.authentication import TokenAuthentication
+
 from blog.models import Post, Comment
 from .serializers import (PostListSerializers,
                           PostDetailSerializers,
                           PostCreateSerializers,
                           PostUpdateSerializer,
                           CommentSerializer)
-from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.permissions import (
-                                        AllowAny,
-                                        IsAuthenticated,
-                                        IsAdminUser,
-                                        IsAuthenticatedOrReadOnly)
-from django.db.models import Q
-from rest_framework.authentication import TokenAuthentication
+from blog.tasks import send_post
 
 
 class PostCreateApiView(CreateAPIView):
@@ -77,3 +78,30 @@ class CommentListApi(ListAPIView):
         queryset = Comment.objects.filter(post=self.kwargs['pk'])
         return queryset
 
+
+class PostVkApiView(APIView):
+
+    def get(self, request):
+        post_id = None
+        user = None
+        response = {'Error': 'No related params'}
+        status = 400
+        if request.GET:
+            if 'post_id' in request.GET:
+                post_id = request.GET.get('post_id')
+            if 'uid' in request.GET:
+                uid = request.GET.get('uid')
+                try:
+                    user = User.objects.get(id=uid)
+                except ObjectDoesNotExist:
+                    user = None
+
+            if user.is_staff:
+                user = user
+
+        if post_id is not None and user is not None:
+            send_post.delay(post_id)
+            response = {'Message': 'Params have been submitted for processing'}
+            status = 200
+
+        return Response(response, status=status)

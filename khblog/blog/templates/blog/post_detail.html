@@ -34,6 +34,11 @@
                         <a href="{% url 'post_remove' pk=post.pk %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Remove</span></a>
             {% endif %}
         {% endif %}
+        {% if request.user.is_staff %}
+            <button onclick="postToVk({{post.id}}, {{ request.user.id }})" class="btn btn-light" style="color: white; background: #4682B4;">Post to VK</button>
+            <p id="response"></p>
+        {% endif %}
+
     </div>
 <hr>
 {% if user.is_authenticated %}

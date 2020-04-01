@@ -13,7 +13,7 @@ class API:
         self.user_id = user_id
         self.group_id = group_id
         self.access_token = access_token
-        self.v = 5.50
+        self.v = 5.52
         self.message = message
         self.attachments = attachments
 
