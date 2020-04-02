@@ -8,6 +8,7 @@ class API:
                  message='testing api', attachments='http://www.khanze.com,'):
         self.url = "https://api.vk.com/method/{}"
         self.path_image = path_image
+        self.expires_in = 0
         if path_image is not None:
             self.path_image = settings.BASE_DIR + path_image
         self.user_id = user_id
@@ -19,9 +20,13 @@ class API:
 
     def get_wall_upload_server(self):
         try:
-            return get(self.url.format('photos.getWallUploadServer'), params={'access_token': self.access_token, 'v': self.v}).json()['response']['upload_url']
+            return get(self.url.format('photos.getWallUploadServer'), params={'access_token': self.access_token,
+                                                                              'v': self.v,
+                                                                              'expires_in': self.expires_in}).json()['response']['upload_url']
         except KeyError:
-            print(get(self.url.format('photos.getWallUploadServer'), params={'access_token': self.access_token, 'v': self.v}).json())
+            print(get(self.url.format('photos.getWallUploadServer'), params={'access_token': self.access_token,
+                                                                             'v': self.v,
+                                                                             'expires_in': self.expires_in}).json())
 
     def upload_image(self):
         response_server = post(self.get_wall_upload_server(), files={'file1': open(self.path_image, mode='rb')}).json()
@@ -34,7 +39,8 @@ class API:
                                                                              'server': upload_info['server'],
                                                                              'hash': upload_info['hash'],
                                                                              'v': self.v,
-                                                                             'uid': self.user_id}).json()
+                                                                             'uid': self.user_id,
+                                                                             'expires_in': self.expires_in}).json()
         return response_post
 
     def send(self):
@@ -43,12 +49,14 @@ class API:
                                                                            'message': self.message,
                                                                            'attachments': self.attachments+'photo{owner_id}_{media_id},'.format(owner_id=self.user_id, media_id=self.save_wall_photo()['response'][0]['id']),
                                                                            'owner_id': self.group_id,
-                                                                           'v': self.v}).json()
+                                                                           'v': self.v,
+                                                                           'expires_in': self.expires_in}).json()
             return response_wall_post
         response_wall_post = get(self.url.format('wall.post'), params={'access_token': self.access_token,
                                                                        'message': self.message,
                                                                        'attachments': self.attachments,
                                                                        'owner_id': self.group_id,
-                                                                       'v': self.v}).json()
+                                                                       'v': self.v,
+                                                                       'expires_in': self.expires_in}).json()
         return response_wall_post
 

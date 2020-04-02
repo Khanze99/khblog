@@ -1,6 +1,7 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
+
     <div class="post">
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaksbr }}</p>
@@ -35,7 +36,7 @@
             {% endif %}
         {% endif %}
         {% if request.user.is_staff %}
-            <button onclick="postToVk({{post.id}}, {{ request.user.id }})" class="btn btn-light" style="color: white; background: #4682B4;">Post to VK</button>
+            <button onclick="postToVk({{post.id}})" class="btn btn-light" style="color: white; background: #4682B4;">Post to VK</button>
             <p id="response"></p>
         {% endif %}
 

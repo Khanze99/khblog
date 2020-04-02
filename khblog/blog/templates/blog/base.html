@@ -14,11 +14,6 @@
     <div class="page-header">
         <h1 style="text-align:center;"><a href="/">Computer Science Blog</a></h1>
         {% if user.is_authenticated %}
-        <form class="form-inline md-form form-sm top-menu row" id="search-form" method="GET" action="/">
-            <input class="form-control form-control-sm mr-2 w-75 row" id="text-input" type="text" placeholder="Search" aria-label="Search"
-            name="Search">
-            <input class="btn btn-light" type="button" onclick="getRequest()" style="color: 4682B4;" value="Search">
-        </form>
             <a href="{% url 'logout_view' %}"><span class="btn btn-light" style="color: 4682B4;">Logout</span></a>
             <a href="{% url 'profile' %}"><span class="btn btn-light" style="color:4682B4;">{{request.user}}</span></a>
             <a href="{% url 'post_new' %}"><span class="btn btn-light" style="color: 4682B4;">New post</span></a>
@@ -27,14 +22,7 @@
             <a href="{% url 'register_view' %}"><span class="btn btn-light" style="color: 4682B4;">Sign up</span></a>
         {% endif %}
     </div>
-    <div style="
-    width: 100%;
-    margin: auto;
-    padding-left: 200px;
-    padding-right: 200px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;">
+    <div>
             {% block content %}
             {% endblock %}
     </div>
