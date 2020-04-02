@@ -57,6 +57,8 @@ class PostUPDATEApiView(RetrieveUpdateAPIView):
 
 
 class PostDeleteApiView(APIView):
+    permission_classes = [IsAdminUser]
+
     def delete(self, request, pk):
         post = Post.objects.get(pk=pk)
         post.delete()
@@ -83,25 +85,17 @@ class PostVkApiView(APIView):
 
     def get(self, request):
         post_id = None
-        user = None
         response = {'Error': 'No related params'}
         status = 400
         if request.GET:
             if 'post_id' in request.GET:
                 post_id = request.GET.get('post_id')
-            if 'uid' in request.GET:
-                uid = request.GET.get('uid')
-                try:
-                    user = User.objects.get(id=uid)
-                except ObjectDoesNotExist:
-                    user = None
 
-            if user.is_staff:
-                user = user
+        if request.user.is_staff:
 
-        if post_id is not None and user is not None:
-            send_post.delay(post_id)
-            response = {'Message': 'Params have been submitted for processing'}
-            status = 200
+            if post_id is not None:
+                send_post.delay(post_id)
+                response = {'Message': 'Params have been submitted for processing'}
+                status = 200
 
         return Response(response, status=status)
