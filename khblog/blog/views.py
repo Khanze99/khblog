@@ -131,67 +131,6 @@ def my_posts(request):
     return render(request, 'blog/my_posts.html', {'posts': posts})
 
 
-def post_like(request, id, pk):
-    if request.user.is_authenticated:
-        post_item = Post.objects.get(pk=pk)
-        user_item_likes = User.objects.filter(liked_by=pk)  # список тех кто лайкнул данный пост по id
-        user_item_dislikes = User.objects.filter(disliked_by=pk)  # Список тех кто дизлайкнул пост по id
-        current_user = request.user
-        if (current_user not in user_item_likes) and (current_user not in user_item_dislikes):
-            try:
-                post_item.likes += 1
-                post_item.liked_by.add(current_user)
-                post_item.save()
-                return redirect('post_detail', pk=pk)
-            except ObjectDoesNotExist:
-                return redirect('post_detail', pk=pk)
-        elif (current_user not in user_item_likes) and (current_user in user_item_dislikes):
-            post_item.dislikes -= 1
-            post_item.disliked_by.remove(current_user)
-            post_item.likes += 1
-            post_item.liked_by.add(current_user)
-            post_item.save()
-            return redirect('post_detail', pk=pk)
-        elif current_user in user_item_likes:
-            post_item.likes -= 1
-            post_item.liked_by.remove(current_user)
-            post_item.save()
-            return redirect('post_detail', pk=pk)
-        else:
-            return redirect('post_detail', pk=pk)
-    else:
-        return redirect('post_detail', pk=pk)
-
-
-def post_dislike(request, pk, id):
-    if request.user.is_authenticated:
-        user_item_disliked = User.objects.filter(disliked_by=pk)
-        user_item_liked = User.objects.filter(liked_by=pk)
-        post = Post.objects.get(pk=pk)
-        user = request.user
-        if (user not in user_item_disliked) and (user not in user_item_liked):
-            post.dislikes += 1
-            post.disliked_by.add(user)
-            post.save()
-            return redirect('post_detail', pk=pk)
-        elif user in user_item_disliked:
-            post.dislikes -= 1
-            post.disliked_by.remove(user)
-            post.save()
-            return redirect('post_detail', pk=pk)
-        elif (user in user_item_liked) and (user not in user_item_disliked):
-            post.likes -= 1
-            post.liked_by.remove(user)
-            post.dislikes += 1
-            post.disliked_by.add(user)
-            post.save()
-            return redirect('post_detail', pk=pk)
-        else:
-            return redirect('post_detail', pk=pk)
-    else:
-        return redirect('post_detail', pk=pk)
-
-
 def get_liked_post(request, id):
     posts = Post.objects.all().order_by('-created_date')
     liked_posts = []
