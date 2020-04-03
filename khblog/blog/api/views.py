@@ -99,3 +99,57 @@ class PostVkApiView(APIView):
                 status = 200
 
         return Response(response, status=status)
+
+
+class LikePostView(APIView):
+    def post(self, request):
+        pk = request.POST.get('pk')
+        post_item = Post.objects.get(pk=pk)
+        user_item_likes = User.objects.filter(liked_by=pk)  # список тех кто лайкнул данный пост по id
+        user_item_dislikes = User.objects.filter(disliked_by=pk)  # Список тех кто дизлайкнул пост по id
+        current_user = request.user
+        if (current_user not in user_item_likes) and (current_user not in user_item_dislikes):
+            try:
+                post_item.likes += 1
+                post_item.liked_by.add(current_user)
+                post_item.save()
+            except ObjectDoesNotExist:
+                return Response({'likes': post_item.likes, 'dislikes': post_item.dislikes, 'error': 'ObjectDoesNotExist'}, status=200)
+        elif (current_user not in user_item_likes) and (current_user in user_item_dislikes):
+            post_item.dislikes -= 1
+            post_item.disliked_by.remove(current_user)
+            post_item.likes += 1
+            post_item.liked_by.add(current_user)
+            post_item.save()
+        elif current_user in user_item_likes:
+            post_item.likes -= 1
+            post_item.liked_by.remove(current_user)
+            post_item.save()
+
+        return Response({'likes': post_item.likes, 'dislikes': post_item.dislikes}, status=200)
+
+
+class DisLikePostView(APIView):
+
+    def post(self, request):
+        pk = request.POST.get('pk')
+        user_item_disliked = User.objects.filter(disliked_by=pk)
+        user_item_liked = User.objects.filter(liked_by=pk)
+        post = Post.objects.get(pk=pk)
+        user = request.user
+        if (user not in user_item_disliked) and (user not in user_item_liked):
+            post.dislikes += 1
+            post.disliked_by.add(user)
+            post.save()
+        elif user in user_item_disliked:
+            post.dislikes -= 1
+            post.disliked_by.remove(user)
+            post.save()
+        elif (user in user_item_liked) and (user not in user_item_disliked):
+            post.likes -= 1
+            post.liked_by.remove(user)
+            post.dislikes += 1
+            post.disliked_by.add(user)
+            post.save()
+
+        return Response({'likes': post.likes, 'dislikes': post.dislikes}, status=200)

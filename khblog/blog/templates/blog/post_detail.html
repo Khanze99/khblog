@@ -1,7 +1,14 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-
+<div style="
+    width: 100%;
+    margin: auto;
+    padding-left: 200px;
+    padding-right: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;">
     <div class="post">
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaksbr }}</p>
@@ -10,24 +17,17 @@
         {% endif %}
         <div class="date">
             <p>Author: {{ post.author }}</p>
-            <form method="post">
                 {% if request.user.is_authenticated %}
-                    <a class="glyphicon glyphicon-thumbs-up" href="{% url 'post_like' id=request.user.id pk=post.pk %}" methods="post" ></a>
-                    <span style="padding-right: 10px;">{{post.likes}}</span>
+                    <button class="btn glyphicon glyphicon-thumbs-up" style="color: white; background: #4682B4;" onclick="postLike({{ post.pk }})"></button>
+                    <span style="padding-right: 10px;" id="likes">{{post.likes}}</span>
                 {% endif %}
                 {% if request.user.is_authenticated %}
-                    <a class="glyphicon glyphicon-thumbs-down" href="{% url 'post_dislike' id=request.user.id pk=post.pk %}" methods="post"></a>
-                                <span>{{post.dislikes}}</span>
+                    <button class="btn glyphicon glyphicon-thumbs-down" style="color: white; background: #4682B4;" onclick="postDislike({{ post.pk }})"></button>
+                                <span id="dislikes">{{post.dislikes}}</span>
                 {% endif %}
-                {% if request.user in list_liked_by %}
-                        <p style="color: #4682B4;">I like</p>
-                    {% endif %}
-                {% if request.user in list_disliked_by %}
-                        <p style="color: #4682B4;">I do not like</p>
-                    {% endif %}
+
                 <p style="padding : 5px;">Created date : {{ post.created_date }}</p>
             <p>Views : {{ post.view }}</p>
-            </form>
         </div>
         {% if request.user.is_authenticated and post in posts %}
             {% if post.created_date %}
@@ -37,7 +37,6 @@
         {% endif %}
         {% if request.user.is_staff %}
             <button onclick="postToVk({{post.id}})" class="btn btn-light" style="color: white; background: #4682B4;">Post to VK</button>
-            <p id="response"></p>
         {% endif %}
 
     </div>
@@ -73,5 +72,6 @@
             </div>
 
     </div>
+</div>
 {% endfor %}
 {% endblock %}

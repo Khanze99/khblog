@@ -5,7 +5,9 @@ from .views import (PostListApiView,
                     PostDeleteApiView,
                     PostCreateApiView,
                     CommentListApi,
-                    PostVkApiView)
+                    PostVkApiView,
+                    LikePostView,
+                    DisLikePostView)
 
 
 urlpatterns = [
@@ -15,5 +17,7 @@ urlpatterns = [
     path('api/posts/<int:pk>/delete/', PostDeleteApiView.as_view(), name='delete'),
     path('api/posts/create/', PostCreateApiView.as_view(), name='create'),
     path('api/posts/<int:pk>/comments/', CommentListApi.as_view(), name='comments'),
-    path('api/postToVk', PostVkApiView.as_view(), name='post_to_vk')
+    path('api/postToVk', PostVkApiView.as_view(), name='post_to_vk'),
+    path('api/post/like/', LikePostView.as_view(), name='like'),
+    path('api/post/dislike/', DisLikePostView.as_view(), name='dislike')
 ]
