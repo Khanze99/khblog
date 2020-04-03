@@ -1,9 +1,17 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-    <div class="content-selection" >
+    <div style="
+    width: 100%;
+    margin: auto;
+    padding-left: 300px;
+    padding-right: 300px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;" >
         <h1>You must login or register to view information on the site.</h1>
-        <a href="{% url 'login_view' %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Login</span></a>
-        or
+        <div>
+        <a href="{% url 'login_view' %}"><span class="btn btn-light" style="color: white; background: #4682B4; float:left">Login</span></a>
+        <span style="float: left; padding-left: 25px; padding-right: 25px;">or</span>
         <a href="{% url 'register_view' %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Sign up</span></a>
-        </div>
+        </div></div>
 {% endblock content%}

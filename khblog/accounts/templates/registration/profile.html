@@ -1,7 +1,16 @@
 {% extends 'blog/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="content-selection" style="padding: 10px; Display:flex;Flex-direction: row;">
+    <div class="content-selection" style="
+    width: 100%;
+    margin: auto;
+    padding-left: 200px;
+    padding-right: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px; Display:flex;Flex-direction: row;">
+
         <div>
         <img class="img-thumbnail" src="{{ user.profile.image.url }}" width="300" height="300">
                 <h2 class="account-heading">{{ user.username }}</h2>
