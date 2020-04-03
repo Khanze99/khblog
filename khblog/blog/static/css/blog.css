@@ -1,0 +1,62 @@
+.page-header {
+    margin-top: 0;
+    background-color:#4682B4;
+    padding: 20px 20px 20px 40px;
+
+}
+
+.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+    color: #ffffff;
+    font-size: 36pt;
+    text-decoration: none;
+
+}
+
+.content {
+    margin-left: 100px;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Roboto', sans-serif;
+}
+
+.date {
+    color: #828282;
+    padding: 15px;
+}
+
+.save {
+    float: right;
+}
+
+.post-form textarea, .post-form input {
+    width: 100%;
+}
+
+.top-menu, .top-menu:hover, .top-menu:visited {
+    color: #ffffff;
+    float: right;
+    font-size: 16pt;
+    margin-right: 20px;
+}
+
+.post_wrapper {
+    top: 30px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    display: flex;
+    width: 90%;
+}
+
+.post h1 a, .post h1 a:visited {
+    color: #3D789A;
+}
+
+.comment {
+    margin: 20px, 0px, 20px, 20px;
+}
+
+.author {
+    color: #3D789A;
+}
