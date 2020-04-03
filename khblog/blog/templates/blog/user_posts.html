@@ -3,7 +3,14 @@
 {% block content %}
             {% for post in posts %}
                 <article class="media content-section">
-                <div>
+                <div style="
+    width: 100%;
+    margin: auto;
+    padding-left: 200px;
+    padding-right: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;">
                 <div>
                     <h1>                <img class="img-thumbnail" src="{{ post.author.profile.image.url }}" width="60" height="60">
                                             <a href="{% url 'post_detail' pk=post.pk%}">{{ post.title }}</a></h1>
