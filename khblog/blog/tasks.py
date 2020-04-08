@@ -1,7 +1,13 @@
 from __future__ import absolute_import, unicode_literals
+import logging
+
+from celery import shared_task
+
+
 from .models import Post
 from .post_vk import API
-from celery import shared_task
+
+logger = logging.getLogger('CELERY')
 
 
 @shared_task

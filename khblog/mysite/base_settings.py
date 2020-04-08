@@ -171,11 +171,23 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': 'logs.log',
             'formatter': 'verbose'
         },
+        'celery_handler': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'celery_logs.log',
+            'formatter': 'verbose'
+        },
+        'console_info': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+            'stream': 'ext://sys.stdout'
+        }
     },
     'loggers': {
         'django': {
@@ -187,6 +199,11 @@ LOGGING = {
             'handlers': ['file'],
             'level': 'DEBUG',
         },
+        'CELERY': {
+            'handlers': ['celery_handler', 'console_info'],
+            'propagate': True,
+            'level': 'DEBUG',
+        }
     }
 }
 
