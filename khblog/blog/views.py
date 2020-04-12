@@ -3,10 +3,11 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth.models import User
+from django.forms import modelformset_factory
 from django.core.exceptions import ObjectDoesNotExist
 
-from .models import Post, Comment
-from .forms import PostForm, CommentForm
+from .models import Post, Comment, Image
+from .forms import PostForm, CommentForm, ImageForm
 
 
 def post_list(request):
@@ -32,6 +33,7 @@ def post_detail(request, pk):
         post.view += 1
         post.save()
         return render(request, 'blog/post_detail.html', {'post': post, 'posts': posts,
+                                                         'images': post.images.all(),
                                                          'comments': comments,
                                                          'comments_root': comments_root,
                                                          'user_item': user_item,
@@ -46,17 +48,27 @@ def post_detail(request, pk):
 
 @login_required
 def post_new(request):
+    ImageFormSet = modelformset_factory(Image, extra=3, form=ImageForm)
+
     if request.method == "POST":
         
-        form = PostForm(request.POST, request.FILES or None)
-        if form.is_valid():
+        form = PostForm(request.POST)
+        image_formset = ImageFormSet(request.POST, request.FILES, queryset=Image.objects.none())
+        if form.is_valid() and image_formset.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.save()
+
+            for image_form in image_formset.cleaned_data:
+                image = image_form['image']
+                img = Image(post=post, image=image)
+                img.save()
+
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
-        return render(request, 'blog/post_new.html', {'form': form})
+        image_formset = ImageFormSet(queryset=Image.objects.none())
+        return render(request, 'blog/post_new.html', {'form': form, 'image_formset': image_formset})
 
 
 @login_required
@@ -122,6 +134,7 @@ def edit_comment(request, pk, id):
             return redirect('post_detail', pk=pk)
     else:
         form = CommentForm(instance=comment)
+        image_formset = modelformset_factory(Image)
     return render(request, 'blog/edit_comment.html', {'form': form})
 
 

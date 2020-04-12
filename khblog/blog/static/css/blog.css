@@ -60,3 +60,7 @@ h1, h2, h3, h4 {
 .author {
     color: #3D789A;
 }
+
+image {
+  border-radius: 8px;
+}
