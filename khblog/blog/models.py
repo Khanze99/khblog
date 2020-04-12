@@ -11,8 +11,6 @@ def upload_location(instance, filename):
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=200)
-    image = models.ImageField(upload_to=upload_location,
-                              null=True, blank=True)
     text = models.TextField()
     liked_by = models.ManyToManyField(User, related_name="liked_by")
     likes = models.IntegerField(default=0, verbose_name="likes")
@@ -57,3 +55,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.text
 
+
+class Image(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to=upload_location, null=True, blank=True)

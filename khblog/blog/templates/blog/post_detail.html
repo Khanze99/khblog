@@ -12,9 +12,10 @@
     <div class="post">
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaksbr }}</p>
-        {% if post.image %}
-            <img src="{{post.image.url}}" class="img-responsive">
-        {% endif %}
+        {% for image in images %}
+            <img src="{{image.image.url}}" class="image">
+        {% endfor %}
+
         <div class="date">
             <p>Author: {{ post.author }}</p>
                 {% if request.user.is_authenticated %}
