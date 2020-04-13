@@ -9,7 +9,7 @@ class PostForm(forms.ModelForm):
 
 
 class ImageForm(forms.ModelForm):
-    image = forms.ImageField(label='image')
+    image = forms.ImageField(widget=forms.FileInput(attrs={'multiple': True}))
 
     class Meta:
         model = Image
