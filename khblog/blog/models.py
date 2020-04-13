@@ -3,6 +3,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+from markdown import markdown
+
 
 def upload_location(instance, filename):
     return "post/{id}_{filename}".format(id=instance.id, filename=filename)
@@ -31,6 +33,11 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-created_date']
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.text = markdown(self.text)
+        super(Post, self).save()
 
 
 class Comment(models.Model):

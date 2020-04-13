@@ -48,27 +48,19 @@ def post_detail(request, pk):
 
 @login_required
 def post_new(request):
-    ImageFormSet = modelformset_factory(Image, extra=3, form=ImageForm)
-
     if request.method == "POST":
-        
         form = PostForm(request.POST)
-        image_formset = ImageFormSet(request.POST, request.FILES, queryset=Image.objects.none())
-        if form.is_valid() and image_formset.is_valid():
+        if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-
-            for image_form in image_formset.cleaned_data:
-                image = image_form['image']
-                img = Image(post=post, image=image)
-                img.save()
-
+            for file in request.FILES.getlist('image'):
+                Image(post=post, image=file).save()
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
-        image_formset = ImageFormSet(queryset=Image.objects.none())
-        return render(request, 'blog/post_new.html', {'form': form, 'image_formset': image_formset})
+        image_form = ImageForm()
+        return render(request, 'blog/post_new.html', {'form': form, 'image_form': image_form})
 
 
 @login_required
