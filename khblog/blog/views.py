@@ -133,9 +133,13 @@ def edit_comment(request, pk, id):
 @login_required
 def my_posts(request):
     posts = Post.objects.filter(author=request.user)
+    paginator = Paginator(posts, 7)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
     return render(request, 'blog/my_posts.html', {'posts': posts})
 
 
+@login_required
 def get_liked_post(request, id):
     posts = Post.objects.all().order_by('-created_date')
     liked_posts = []
@@ -146,12 +150,17 @@ def get_liked_post(request, id):
     return render(request, 'blog/liked_posts.html', {'liked_posts': liked_posts})
 
 
+@login_required
 def get_user_posts(request, id):
     user = User.objects.get(id=id)
     posts = Post.objects.filter(author=user)
+    paginator = Paginator(posts, 7)
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
     return render(request, 'blog/user_posts.html', context={'posts': posts})
 
 
+@login_required
 def reply_comment(request, uid, pk, cid):
     if request.method == "POST":
         form = CommentForm(request.POST)

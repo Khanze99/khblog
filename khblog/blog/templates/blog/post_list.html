@@ -2,32 +2,25 @@
 
     {% block content%}
         <form class="form-inline md-form form-sm top-menu row" id="search-form" onsubmit="getRequest(); return false;">
-            <input class="form-control form-control-sm mr-2 w-75 row" id="text-input" type="text" placeholder="Search" aria-label="Search"
+            <input class="form-control form-control-sm mr-1 w-75 row for-input-search" id="text-input" type="text" placeholder="Search" aria-label="Search"
             name="Search">
-            <input class="btn btn-light" type="submit" style="color: white; background: #4682B4;" value="Search">
+            <input class="btn btn-light font-courier" type="submit" style="color: white; background: #4682B4;" value="Search">
         </form>
-            <div id="posts" style="
-    width: 100%;
-    margin: auto;
-    padding-left: 200px;
-    padding-right: 200px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;">
+            <div class="info-correct" id="posts">
             {% for post in posts %}
                 <article class="media content-section">
                 <div>
                     <div>
-                    <h1>
+                    <h2>
                         <a href="{% url 'profiles' id=post.author.id %}"><img class="img-thumbnail" src="{{ post.author.profile.image.url }}" width="100px" height="100px"></a>
-                        <a href="{% url 'post_detail' pk=post.pk%}" >{{ post.title }}</a></h1>
+                        <a href="{% url 'post_detail' pk=post.pk%}" >{{ post.title }}</a></h2>
                     </div>
                     <div class="post">
                         <div class="date">
                             <p>Created date: {{ post.created_date }}</p>
                             <p> Author: <a href="{% url 'profiles' id=post.author.id %}">{{post.author}}</a></p>
                         </div>
-                        <a href="{%url 'post_detail' pk=post.pk%}">Comments: {{post.comments.count}}</a>
+                        <a class="font-courier" href="{%url 'post_detail' pk=post.pk%}">Comments: {{post.comments.count}}</a>
                     <hr>
 
                     </div>

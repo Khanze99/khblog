@@ -16,13 +16,16 @@
     margin-left: 100px;
 }
 
-h1, h2, h3, h4 {
-    font-family: 'Roboto', sans-serif;
+
+
+h2, h3, h4 {
+    font-family: 'Courier';
 }
 
 .date {
     color: #828282;
     padding: 15px;
+    font-family: 'FreeMono';
 }
 
 .save {
@@ -49,7 +52,7 @@ h1, h2, h3, h4 {
     width: 90%;
 }
 
-.post h1 a, .post h1 a:visited {
+.post h1 , .post h1 {
     color: #3D789A;
 }
 
@@ -60,3 +63,88 @@ h1, h2, h3, h4 {
 .author {
     color: #3D789A;
 }
+
+.info-correct {width: 100%;
+    margin: auto;
+    padding-left: 200px;
+    padding-right: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;}
+
+.profile {
+    width: 100%;
+    margin: auto;
+    padding-left: 200px;
+    padding-right: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    Display:flex;
+    Flex-direction: row;}
+
+button, submit {
+        font-family: 'Courier';
+
+}
+
+
+.font-courier {
+    font-family: 'Courier';
+}
+
+.font-freemono{
+    font-family: 'FreeMono';
+}
+
+.for-footer-freemono {
+    font-family: 'FreeMono';
+}
+
+.for-input-search {
+    font-family: 'Courier';
+    padding-right: 10px;
+}
+
+.foot-info {
+    padding-left: 25px; padding-right: 25px;
+}
+
+.foot-right {
+    text-align: right;
+}
+
+.foot-left {
+    float: left;
+}
+
+.csb-header {
+    font-family: 'FreeMono';
+    text-align: center;
+}
+
+.color-for-button-header {
+    color: 4682B4;
+}
+
+.text {
+    font-family: 'Courier';
+}
+
+.color-for-button {
+color: white; background: #4682B4;
+}
+
+.image {
+    margin: 10px;
+    text-align: center;
+    border-radius: 20px;
+    }
+
+
+.form-auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }

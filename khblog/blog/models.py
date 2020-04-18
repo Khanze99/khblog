@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 from markdown import markdown
+from PIL import Image as ImagePil
 
 
 def upload_location(instance, filename):
@@ -66,3 +67,13 @@ class Comment(models.Model):
 class Image(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to=upload_location, null=True, blank=True)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super(Image, self).save()
+        img = ImagePil.open(self.image.path)
+
+        if img.height > 500 or img.width > 500:
+            output_size = (500, 500)
+            img.thumbnail(output_size)
+            img.save(self.image.path)

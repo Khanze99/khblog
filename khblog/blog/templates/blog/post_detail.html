@@ -1,20 +1,13 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
-<div style="
-    width: 100%;
-    margin: auto;
-    padding-left: 200px;
-    padding-right: 200px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;">
+<div class="info-correct">
     <div class="post">
-        <h1>{{ post.title }}</h1>
-        <p>{{ post.text|safe }}</p>
+        <h2>{{ post.title }}</h2>
+        <p class="text">{{ post.text|safe }}</p>
         {% for image in images %}
-        <div class="image" style="padding: 10px; text-align: center;" >
-            <img src="{{image.image.url}}">
+        <div>
+            <img src="{{image.image.url}}" class="image">
         </div>
         {% endfor %}
 
@@ -34,18 +27,19 @@
         </div>
         {% if request.user.is_authenticated and post in posts %}
             {% if post.created_date %}
-                        <a href="{% url 'post_edit' pk=post.pk %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Edit</span></a>
-                        <a href="{% url 'post_remove' pk=post.pk %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Remove</span></a>
+
+                        <a role="button" class="btn font-courier" style="color: white; background: #4682B4;" href="{% url 'post_edit' pk=post.pk %}">Edit</a>
+                        <a role="button" class="btn font-courier" style="color: white; background: #4682B4;" href="{% url 'post_remove' pk=post.pk %}">Remove</a>
             {% endif %}
         {% endif %}
         {% if request.user.is_staff %}
-            <button onclick="postToVk({{post.id}})" class="btn btn-light" style="color: white; background: #4682B4;">Post to VK</button>
+            <button onclick="postToVk({{post.id}})" class="btn" style="color: white; background: #4682B4;">Post to VK</button>
         {% endif %}
 
     </div>
 <hr>
 {% if user.is_authenticated %}
-<a href="{% url 'add_comment_to_post' pk=post.pk %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Add comment</span></a>
+<a href="{% url 'add_comment_to_post' pk=post.pk %}"><span class="btn font-courier" style="color: white; background: #4682B4;">Add comment</span></a>
 {% endif %}
 {% for comment in comments %}
     <div class="comment">
@@ -56,8 +50,7 @@
             {{ comment.created_date }}
                             <a href="{% url 'reply' pk=post.pk uid=request.user.id cid=comment.id %}">Reply</a>
             {% if comment in comments_root and user.is_authenticated %}
-                <p><a href="{% url 'remove_comment' pk=post.pk id=comment.id %}">Remove</a></p>
-                <a href="{% url 'edit_comment' pk=post.pk id=comment.id %}">Edit</a>
+                <p><a href="{% url 'remove_comment' pk=post.pk id=comment.id %}">Remove</a> <a href="{% url 'edit_comment' pk=post.pk id=comment.id %}">Edit</a></p>
             {% endif %}
             </div>
             <div class="comment" style="padding-left: 50px;">
@@ -67,8 +60,7 @@
                 <div class="date">
                     <p>{{child.created_date}}</p>
                 {% if child  in comments_root and user.is_authenticated %}
-                <p><a href="{% url 'remove_comment' pk=post.pk id=comment.id %}">Remove</a></p>
-                <a href="{% url 'edit_comment' pk=post.pk id=comment.id %}">Edit</a>
+                <p><a href="{% url 'remove_comment' pk=post.pk id=comment.id %}">Remove</a> <a href="{% url 'edit_comment' pk=post.pk id=comment.id %}">Edit</a></p>
             {% endif %}
                 </div>
             {% endfor %}
