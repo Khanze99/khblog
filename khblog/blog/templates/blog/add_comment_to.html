@@ -2,19 +2,12 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div style="
-    width: 100%;
-    margin: auto;
-    padding-left: 200px;
-    padding-right: 200px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;">
+<div class="info-correct font-courier">
     <h1>New comment</h1>
     <form method="POST" class="post-form">
         {% csrf_token %}
         {{form|crispy}}
-        <button type="submit" class="save btn btn-light" style="color: white; background: #4682B4;">Send</button>
+        <button type="submit" class="save btn" style="color: white; background: #4682B4;">Send</button>
     </form>
 </div>
 {% endblock %}

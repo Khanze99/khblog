@@ -3,12 +3,16 @@ from django.utils.html import format_html
 from django.urls import path
 from django.shortcuts import render
 
-from .models import Post, Comment
+from .models import Post, Comment, Image
 from accounts.forms import ProfilesForm
 
 
 class CommentsInline(admin.TabularInline):
     model = Comment
+
+
+class ImagesInline(admin.TabularInline):
+    model = Image
 
 
 @admin.register(Comment)
@@ -21,7 +25,7 @@ class PostAdmin(admin.ModelAdmin):
     change_list_template = 'admin/blog/change_list.html'
     list_display = ('id', 'author', 'title', 'text', 'get_liked_by', 'likes',
                     'get_disliked_by', 'dislikes', 'created_date', 'update_date', 'view', 'custom_button')
-    inlines = (CommentsInline, )
+    inlines = (CommentsInline, ImagesInline)
 
     def get_urls(self):
         # Расширяем юрлы для админки через вложение модели
@@ -39,7 +43,6 @@ class PostAdmin(admin.ModelAdmin):
 
     def get_permissions(self, request, pk):
         # Тут будет происходить вся логика к которому мы будет оправлять запросы с формы
-        print(pk)
         obj = Post.objects.get(pk=pk)
         form = ProfilesForm()
         return render(request, 'admin/blog/test.html', {'form': form, 'obj': obj})

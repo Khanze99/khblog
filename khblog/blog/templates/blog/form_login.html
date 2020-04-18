@@ -2,19 +2,12 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div style="
-    width: 100%;
-    margin: auto;
-    padding-left: 300px;
-    padding-right: 300px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;">
+<div class=" form-auth font-courier">
     <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
-        <input type="submit" class="btn btn-light" style="color: white; background: #4682B4;" value="{{ title }}"/>
-        <a href="{% url 'password_reset' %}"><span class="btn btn-light" style="color: white; background: #4682B4;">Forgot your password?</span></a>
+        <input type="submit" class="btn font-courier" style="color: white; background: #4682B4;" value="{{ title }}"/>
+        <a href="{% url 'password_reset' %}"><span class="btn font-courier" style="color: white; background: #4682B4;">Forgot your password?</span></a>
     </form>
 </div>
 {% endblock %}
