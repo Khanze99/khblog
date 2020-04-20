@@ -24,7 +24,7 @@ class CommentAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     change_list_template = 'admin/blog/change_list.html'
     list_display = ('id', 'author', 'title', 'text', 'get_liked_by', 'likes',
-                    'get_disliked_by', 'dislikes', 'created_date', 'update_date', 'view', 'custom_button')
+                    'get_disliked_by', 'dislikes', 'created_date', 'update_date', 'custom_button')
     inlines = (CommentsInline, ImagesInline)
 
     def get_urls(self):

@@ -20,8 +20,9 @@
                     {{ p_form|crispy }}
                 </fieldset>
                     <button class="btn btn-blue" style="color: white; background: #4682B4;" type="submit">Update</button>
-                                <a href="{% url 'password_change'%}" ><span class="btn btn-blue" style="color: white; background: #4682B4;">Change password</span></a>
-                                <a href="{% url 'token' uid=request.user.id %}" ><span class="btn btn-blue" style="color: white; background: #4682B4;">My token</span></a>
+                    <a href="{% url 'password_change'%}" ><span class="btn btn-blue" style="color: white; background: #4682B4;">Change password</span></a>
+                    <a href="{% url 'token' uid=request.user.id %}" ><span class="btn btn-blue" style="color: white; background: #4682B4;">My token</span></a>
+                    <a href="{% url 'delete' uid=request.user.id %}" ><span class="btn btn-blue" style="color: white; background: #4682B4;">Delete account</span></a>
             </form>
         </div>
 
