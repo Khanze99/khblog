@@ -23,7 +23,7 @@
                 {% endif %}
 
                 <p style="padding : 5px;">Created date : {{ post.created_date }}</p>
-            <p>Views : {{ post.view }}</p>
+            <p>Views : {{ views }}</p>
         </div>
         {% if request.user.is_authenticated and post in posts %}
             {% if post.created_date %}
@@ -55,7 +55,7 @@
             </div>
             <div class="comment" style="padding-left: 50px;">
             {% for child in comment.children%}
-                <h3>    <a href="{% url 'profiles' id=child.author.id %}" style="color:black;"><img class="img-thumbnail" src="{{ child.author.profile.image.url }}" width="70px" height="70px">{{child.author}}</a></h3>
+                <h3>   ц <a href="{% url 'profiles' id=child.author.id %}" style="color:black;"><img class="img-thumbnail" src="{{ child.author.profile.image.url }}" width="70px" height="70px">{{child.author}}</a></h3>
                 <p><a href="{% url 'profiles' id=comment.author.id %}">{{comment.author}}</a>, {{child.text}}</p>
                 <div class="date">
                     <p>{{child.created_date}}</p>

@@ -8,13 +8,13 @@ logger = logging.getLogger('CELERY')
 
 
 class API:
-    def __init__(self, path_image=None, access_token=settings.ACCESS_TOKEN_VK, user_id=169002303, group_id=-135184895,
+    def __init__(self, path_images=None, access_token=settings.ACCESS_TOKEN_VK, user_id=169002303, group_id=-135184895,
                  message='testing api', attachments='http://www.khanze.com,'):
         self.url = "https://api.vk.com/method/{}"
-        self.path_image = path_image
+        self.path_images = path_images
         self.expires_in = 0
-        if path_image is not None:
-            self.path_image = settings.BASE_DIR + path_image
+        if path_images is not None:
+            self.path_images = [settings.BASE_DIR + image for image in self.path_images]
         self.user_id = user_id
         self.group_id = group_id
         self.access_token = access_token
@@ -34,13 +34,13 @@ class API:
                                                                              'expires_in': self.expires_in}).json()
             logger.warning(f'Error message: {response["error"]["error_msg"]}')
 
-    def upload_image(self):
-        response_server = post(self.get_wall_upload_server(), files={'file1': open(self.path_image, mode='rb')}).json()
+    def upload_image(self, image):
+        response_server = post(self.get_wall_upload_server(), files={'file1': open(image, mode='rb')}).json()
         logger.info('Upload image to vk server')
         return response_server
 
-    def save_wall_photo(self):
-        upload_info = self.upload_image()
+    def save_wall_photo(self, image):
+        upload_info = self.upload_image(image)
         response_post = get(self.url.format('photos.saveWallPhoto'), params={'access_token': self.access_token,
                                                                              'photo': upload_info['photo'],
                                                                              'server': upload_info['server'],
@@ -53,10 +53,13 @@ class API:
 
     def send(self):
         try:
-            if self.path_image is not None:
+            if self.path_images is not None:
+                attachments = self.attachments
+                for image in self.path_images:
+                    attachments += f'photo{self.user_id}_{self.save_wall_photo(image)},'
                 response_wall_post = get(self.url.format('wall.post'), params={'access_token': self.access_token,
                                                                                'message': self.message,
-                                                                               'attachments': self.attachments+'photo{owner_id}_{media_id},'.format(owner_id=self.user_id, media_id=self.save_wall_photo()),
+                                                                               'attachments': attachments,
                                                                                'owner_id': self.group_id,
                                                                                'v': self.v,
                                                                                'expires_in': self.expires_in}).json()

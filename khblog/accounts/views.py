@@ -103,3 +103,14 @@ def token_for_api(request, uid):
     user = User.objects.get(id=uid)
     token = Token.objects.get_or_create(user=user)[0]
     return render(request, 'registration/token.html', {'token': token})
+
+
+@login_required
+def delete_account(request, uid):
+    user = User.objects.get(id=uid)
+    if request.user.id == user.id:
+        logout(request)
+        user.delete()
+        return redirect('/')
+
+

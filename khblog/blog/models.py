@@ -5,10 +5,12 @@ from django.contrib.auth.models import User
 
 from markdown import markdown
 from PIL import Image as ImagePil
+from uuid import uuid4
 
 
 def upload_location(instance, filename):
-    return "post/{id}_{filename}".format(id=instance.id, filename=filename)
+    file = filename.split('.')
+    return f"post/{uuid4()}.{file[1]}"
 
 
 class Post(models.Model):
@@ -21,7 +23,6 @@ class Post(models.Model):
     dislikes = models.IntegerField(default=0, verbose_name="dislikes")
     created_date = models.DateTimeField(default=timezone.now)
     update_date = models.DateTimeField(auto_now=True, auto_now_add=False)
-    view = models.IntegerField(default=0, verbose_name='views')
 
     def __str__(self):
         return self.title
@@ -77,3 +78,9 @@ class Image(models.Model):
             output_size = (500, 500)
             img.thumbnail(output_size)
             img.save(self.image.path)
+
+
+class IPView(models.Model):
+    user = models.ForeignKey(User, related_name='user_view_ip', blank=True, null=True, on_delete=models.SET_NULL)
+    ip = models.GenericIPAddressField()
+    post = models.ForeignKey(Post, related_name='ip_views', on_delete=models.CASCADE, null=True)

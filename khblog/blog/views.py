@@ -6,8 +6,9 @@ from django.contrib.auth.models import User
 from django.forms import modelformset_factory
 from django.core.exceptions import ObjectDoesNotExist
 
-from .models import Post, Comment, Image
+from .models import Post, Comment, Image, IPView
 from .forms import PostForm, CommentForm, ImageForm
+from .helpers import get_client_ip
 
 
 def post_list(request):
@@ -24,15 +25,19 @@ def post_list(request):
 
 
 def post_detail(request, pk):
+    ip = get_client_ip(request)
+    post = get_object_or_404(Post, pk=pk)
+    flag = IPView.objects.filter(ip=ip, post=post).exists()
+    if flag is False:
+        IPView(ip=ip, user=request.user, post=post).save()
+    views = IPView.objects.filter(post=post).count()
     if request.user.is_authenticated:
         comments_root = Comment.objects.filter(author=request.user)
         posts = Post.objects.filter(author=request.user)
         user_item = User.objects.filter(liked_by=pk)
-        post = get_object_or_404(Post, pk=pk)
         comments = post.comments.filter(parent__isnull=True)
-        post.view += 1
-        post.save()
         return render(request, 'blog/post_detail.html', {'post': post, 'posts': posts,
+                                                         'views': views,
                                                          'images': post.images.all(),
                                                          'comments': comments,
                                                          'comments_root': comments_root,
