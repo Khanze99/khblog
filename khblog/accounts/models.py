@@ -2,31 +2,44 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+
+
 from PIL import Image
+from uuid import uuid4
 
 
 def upload_profile(instance, filename):
     return '{}/{}'.format(instance.user.id, filename)
 
 
+def upload_projects_image(instance, filename):
+    file = filename.split('.')
+    return f'projects/{uuid4()}.{file[1]}'
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='default-medium.png', upload_to=upload_profile)
+    photo = models.ImageField(default='default-medium.png', upload_to=upload_profile)
     city = models.CharField(default='-', max_length=32)
-    bio = models.TextField(null=True, blank=True)
+    doing = models.TextField(null=True, blank=True)
+    about_me = models.TextField(null=True, blank=True)
     github_link = models.CharField(blank=True, null=True, max_length=50)
+    vk_link = models.CharField(blank=True, null=True, max_length=100)
+    inst_link = models.CharField(blank=True, null=True, max_length=100)
+    linkedin_link = models.CharField(blank=True, null=True, max_length=100)
+    facebook_link = models.CharField(blank=True, null=True, max_length=100)
 
     def __str__(self):
         return f'Profile {self.user.username}'
 
     def save(self, *args, **kwargs):
         super(Profile, self).save(*args, **kwargs)
-        img = Image.open(self.image.path)
+        img = Image.open(self.photo.path)
 
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
+        if img.height > 500 or img.width > 500:
+            output_size = (500, 500)
             img.thumbnail(output_size)
-            img.save(self.image.path)
+            img.save(self.photo.path)
 
 
 @receiver(post_save, sender=User)
@@ -38,3 +51,18 @@ def create_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_profile(sender, instance, **kwargs):
     instance.profile.save()
+
+
+class Project(models.Model):
+    profile = models.ForeignKey(Profile, related_name='projects', on_delete=models.CASCADE)
+    name = models.CharField(max_length=510, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return str(self.name)
+
+
+class ProjectImage(models.Model):
+    project = models.ForeignKey(Project, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=upload_projects_image)
+

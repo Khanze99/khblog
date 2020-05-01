@@ -1,32 +1,188 @@
-{% extends 'blog/base.html' %}
-{% load crispy_forms_tags %}
-{% block content %}
-    <div class="profile font-courier">
+<!-- Сообщаем браузеру как стоит обрабатывать эту страницу -->
+{% load static %}
+<!-- Оболочка документа, указываем язык содержимого -->
+<html lang="ru">
+	<!-- Заголовок страницы, контейнер для других важных данных (не отображается) -->
+	<head>
+		<!-- Заголовок страницы в браузере -->
+		<title>CSB - Portfolio</title>
+		<!-- Подключаем CSS -->
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
+		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+		<!-- Кодировка страницы -->
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+	</head>
+	<!-- Отображаемое тело страницы -->
+	<body>
+		<div class="wrapper">
+			<div class="content">
+				<div class="header">
+					<div class="container">
+						<div class="header__row">
+							<div class="header__logo">
+								<a href="/"><img src="{% static 'img/logo.png' %}" alt="" class="logo__image "><span class="transition">Profile</span></a>
+							</div>
 
-        <div>
-        <img class="img-thumbnail" src="{{ user.profile.image.url }}" width="300" height="300">
-                <h2 class="account-heading">{{ user.username }}</h2>
-                <p>{{ user.email }}</p>
-                <a href="{% url 'my_posts' %}" ><span class="btn btn-blue" style="color: white; background: #4682B4;">My posts</span></a>
-                <a href="{% url 'liked_posts' id=request.user.id %}" ><span class="btn btn-blue" style="color: white; background: #4682B4;">Liked posts</span></a>
-                    <p style="padding: 5px;">Total Registered: {{users}}</p>
-
-            </div>
-            <form method="POST" enctype="multipart/form-data" style="padding: 10px;">
-                {% csrf_token %}
-                <fieldset class="form-group">
-                    <legend class="border-bottom mb-4">Profile info</legend>
-                    {{ u_form|crispy }}
-                    {{ p_form|crispy }}
-                </fieldset>
-                    <button class="btn btn-blue" style="color: white; background: #4682B4;" type="submit">Update</button>
-                    <a href="{% url 'password_change'%}" ><span class="btn btn-blue" style="color: white; background: #4682B4;">Change password</span></a>
-                    <a href="{% url 'token' uid=request.user.id %}" ><span class="btn btn-blue" style="color: white; background: #4682B4;">My token</span></a>
-                    <a href="{% url 'delete' uid=request.user.id %}" ><span class="btn btn-blue" style="color: white; background: #4682B4;">Delete account</span></a>
-            </form>
-        </div>
-
-
-
-
-{% endblock content%}
+							<div class="header__menu">
+								<img src="{% static 'img/home.png' %}" alt="">
+								<a href="/" class="header__item transition">Home</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="product">
+					<div class="container">
+						<div class="product__row">
+							<div class="product__left">
+								<p>{{ profile.user.first_name }} {{ profile.user.last_name}}</p>
+								<h6>{{ profile.doing }}</h6>
+								<div class="product__social">
+									<ul>
+										<li><img src="{% static 'img/facebook.png' %}" alt="">Facebook</li>
+										<li><img src="{% static 'img/vk.png'%}" alt="">VK</li>
+										<li><img src="{% static 'img/instagram.png'%}" alt="">Instagram</li>
+										<li><img src="{% static 'img/linkedin.png'%}" alt="">LinkedIn</li>
+										<li><img src="{% static 'img/cat.png'%}" alt="">Github</li>
+									</ul>
+								</div>
+							</div>
+							<div class="product__image">
+								<img src="{% static 'img/gif.gif'%}" alt="Image">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="wrapper">
+					<div class="content">
+						<div class="what">
+							<div class='container'>
+								<div class="what__row">
+									<div class="what__image">
+										<img src="img/image_1.png" alt="">
+									</div>
+									<div class="what__image">
+										<img src="{{ profile.photo.url }}">
+									</div>
+									<div class="what__body">
+										<div class="what__title title ">About me</div>
+										<div class="what__text">
+											<p>{{ profile.about_me }}</p>
+										</div>
+									</div>
+								</div>
+		
+							</div>
+						</div>
+						<div class="columns">
+							<div class='container'>
+								<div class="columns__title title">Мои проекты</div>
+								<div class="columns__row">
+									<div class="columns__column">
+										<div class="columns__item item">
+											<div class="item__row">
+												<div class="item__image"><img src="img/image.png" alt=""></div>
+												<div class="item__body">
+													<div class="item__title">The description for the image</div>
+													<div class="item__text">Pariatur iure ab sunt nesciunt, quibusdam odio iste cumque itaque, ipsa vel exercitationem ullam quos aut nostrum cupiditate fuga quaerat quam animi dolores. Sequi itaque, unde perferendis nemo debitis dolor.</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="columns__column">
+										<div class="columns__item item">
+											<div class="item__row">
+												<div class="item__image"><img src="img/image.png" alt=""></div>
+												<div class="item__body">
+													<div class="item__title">The description for the image</div>
+													<div class="item__text">Pariatur iure ab sunt nesciunt, quibusdam odio iste cumque itaque, ipsa vel exercitationem ullam quos aut nostrum cupiditate fuga quaerat quam animi dolores. Sequi itaque, unde perferendis nemo debitis dolor.</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="columns__column">
+										<div class="columns__item item">
+											<div class="item__row">
+												<div class="item__image"><img src="img/image.png" alt=""></div>
+												<div class="item__body">
+													<div class="item__title">The description for the image</div>
+													<div class="item__text">Pariatur iure ab sunt nesciunt, quibusdam odio iste cumque itaque, ipsa vel exercitationem ullam quos aut nostrum cupiditate fuga quaerat quam animi dolores. Sequi itaque, unde perferendis nemo debitis dolor.</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="columns__column">
+										<div class="columns__item item">
+											<div class="item__row">
+												<div class="item__image"><img src="img/image.png" alt=""></div>
+												<div class="item__body">
+													<div class="item__title">The description for the image</div>
+													<div class="item__text">Pariatur iure ab sunt nesciunt, quibusdam odio iste cumque itaque, ipsa vel exercitationem ullam quos aut nostrum cupiditate fuga quaerat quam animi dolores. Sequi itaque, unde perferendis nemo debitis dolor.</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="vertical">
+							<div class='container'>
+								<div class="vertical__title title">Мои достижения</div>
+								<div class="vertical__body">
+									<div class="vertical__row">
+										<div class="vertical__column vertical__column_1">
+											<div class="vertical__item">
+												<div class="vertical__subtitle">Описание</div>
+												<div class="vertical__label">Проект</div>
+												<div class="vertical__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint tenetur fugit vel, eligendi illum, placeat quo vero reiciendis consectetur.</div>
+												<a href="" class="vertical__btn">Поделиться</a>
+											</div>
+										</div>
+										<div class="vertical__column vertical__column_2">
+											<div class="vertical__item">
+												<div class="vertical__subtitle">Описание</div>
+												<div class="vertical__label">Проект</div>
+												<div class="vertical__text">
+													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint tenetur fugit vel, eligendi illum, placeat quo vero reiciendis consectetur.</p>
+												</div>
+												<a href="" class="vertical__btn">Поедлиться</a>
+											</div>
+										</div>
+										<div class="vertical__column vertical__column_3">
+											<div class="vertical__item">
+												<div class="vertical__subtitle">Описание</div>
+												<div class="vertical__label">Проект</div>
+												<div class="vertical__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint tenetur fugit vel, eligendi illum, placeat quo vero reiciendis consectetur.</div>
+												<a href="" class="vertical__btn">Поделиться</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>		
+				<footer class="footer">
+					<div class="container">
+						<div class="footer__row">
+							<div class="footer__text">
+								KhanzBar Design Inc.
+							</div>
+							<div class="footer__subtext">
+								<p >© 2020 KhanzBar All rights reserved.</p>
+								<a href="https://www.google.ru" ><p class="transition">Designed by Loamanroy.</p></a>
+								<div class="footer__powered">
+									<a href="https://www.google.ru" ><p class="transition">Powered by NGINX 2019</p></a>
+									<a href="https://www.google.ru" ><p class="transition">Created by Django2</p></a>
+									<a href="https://www.google.ru" ><p class="transition">Python3</p></a>
+									<a href="https://www.google.ru" ><p class="transition">PostgreSQL</p></a>
+									<a href="https://www.google.ru" ><p class="transition">Docker</p></a>
+									<a href="https://www.google.ru" ><p class="transition">JavaScript</p></a>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</footer>
+			</div>
+		</div>
+	</body>
+</html>

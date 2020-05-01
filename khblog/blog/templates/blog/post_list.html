@@ -12,13 +12,13 @@
                 <div>
                     <div>
                     <h2>
-                        <a href="{% url 'profiles' id=post.author.id %}"><img class="img-thumbnail" src="{{ post.author.profile.image.url }}" width="100px" height="100px"></a>
+                        <a href="{% url 'profile' username=post.author.username %}"><img class="img-thumbnail" src="{{ post.author.profile.photo.url }}" width="100px" height="100px"></a>
                         <a href="{% url 'post_detail' pk=post.pk%}" >{{ post.title }}</a></h2>
                     </div>
                     <div class="post">
                         <div class="date">
                             <p>Created date: {{ post.created_date }}</p>
-                            <p> Author: <a href="{% url 'profiles' id=post.author.id %}">{{post.author}}</a></p>
+                            <p> Author: <a href="{% url 'profile' username=post.author.username %}">{{post.author}}</a></p>
                         </div>
                         <a class="font-courier" href="{%url 'post_detail' pk=post.pk%}">Comments: {{post.comments.count}}</a>
                     <hr>
