@@ -10,7 +10,7 @@ class ProjectsTabularInlines(admin.TabularInline):
 class ProfileAdmin(admin.ModelAdmin):
     inlines = [ProjectsTabularInlines, ]
     list_display = ('id', 'user', 'photo', 'city', 'doing', 'about_me',
-                    'github_link', 'vk_link', 'inst_link', 'linkedin_link',
+                    'github_link',  'github_username', 'vk_link', 'inst_username', 'linkedin_link',
                     'facebook_link')
 
 

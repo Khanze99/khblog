@@ -1,16 +1,14 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.db import IntegrityError
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
+from django.urls import reverse
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
 
 from .forms import UserLoginForm, UserRegisterForm, ChangePassword, UserUpdateForm, ProfileUpdateForm, ProfilesForm
 from .models import Profile
-from blog.models import Post
 from .tasks import send_to_mail_user, send_mail_pass
 
 
@@ -73,7 +71,7 @@ def change_profile(request, uid):
                 send_mail_pass.delay(username, email)
             u_form.save()
             p_form.save()
-            return redirect('profile_change')
+            return redirect(reverse('profile_change', args=[request.user.id]))
     else:
         users = User.objects.all().count()
         u_form = UserUpdateForm(instance=request.user)
@@ -89,7 +87,8 @@ def change_profile(request, uid):
 @login_required(login_url='/need_login/')
 def profile(request, username):
     profile = Profile.objects.get(user__username=username)
-    context = {"profile": profile}
+    projects = profile.projects.all()
+    context = {"profile": profile, 'projects': projects}
     return render(request, "registration/profile.html", context=context)
 
 

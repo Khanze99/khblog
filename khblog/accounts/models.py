@@ -23,9 +23,10 @@ class Profile(models.Model):
     city = models.CharField(default='-', max_length=32)
     doing = models.TextField(null=True, blank=True)
     about_me = models.TextField(null=True, blank=True)
-    github_link = models.CharField(blank=True, null=True, max_length=50)
+    github_link = models.CharField(blank=True, null=True, max_length=100)
+    github_username = models.CharField(blank=True, null=True, max_length=100)
     vk_link = models.CharField(blank=True, null=True, max_length=100)
-    inst_link = models.CharField(blank=True, null=True, max_length=100)
+    inst_username = models.CharField(blank=True, null=True, max_length=100)
     linkedin_link = models.CharField(blank=True, null=True, max_length=100)
     facebook_link = models.CharField(blank=True, null=True, max_length=100)
 
@@ -65,4 +66,14 @@ class Project(models.Model):
 class ProjectImage(models.Model):
     project = models.ForeignKey(Project, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=upload_projects_image)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super(ProjectImage, self).save()
+        img = Image.open(self.image.path)
+
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
 

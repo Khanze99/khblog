@@ -38,12 +38,12 @@
 								<p>{{ profile.user.first_name }} {{ profile.user.last_name}}</p>
 								<h6>{{ profile.doing }}</h6>
 								<div class="product__social">
+									<a href="{{ profile.facebook_link }}"><img src="{% static 'img/facebook.png' %}" alt=""></a>
+									<a href="{{ profile.vk_link }}"><img src="{% static 'img/vk.png'%}" alt=""></a>
+									<a href="{{ profile.linkedin_link }}"><img src="{% static 'img/linkedin.png'%}" alt=""></a>
+									<a href="{{ profile.github_link }}"><img src="{% static 'img/cat.png'%}" alt=""></a>
 									<ul>
-										<li><img src="{% static 'img/facebook.png' %}" alt="">Facebook</li>
-										<li><img src="{% static 'img/vk.png'%}" alt="">VK</li>
-										<li><img src="{% static 'img/instagram.png'%}" alt="">Instagram</li>
-										<li><img src="{% static 'img/linkedin.png'%}" alt="">LinkedIn</li>
-										<li><img src="{% static 'img/cat.png'%}" alt="">Github</li>
+										<li><img src="{% static 'img/instagram.png'%}" alt=""> {{ profile.inst_username }} </li>
 									</ul>
 								</div>
 							</div>
@@ -76,91 +76,26 @@
 						</div>
 						<div class="columns">
 							<div class='container'>
-								<div class="columns__title title">Мои проекты</div>
+								<div class="columns__title title">My projects</div>
 								<div class="columns__row">
+									{% for project in projects %}
 									<div class="columns__column">
 										<div class="columns__item item">
 											<div class="item__row">
-												<div class="item__image"><img src="img/image.png" alt=""></div>
+												{% for image in project.images.all %}
+													<div class="item__image"><img src="{{ image.image.url }}" alt=""></div>
+												{% endfor %}
 												<div class="item__body">
-													<div class="item__title">The description for the image</div>
-													<div class="item__text">Pariatur iure ab sunt nesciunt, quibusdam odio iste cumque itaque, ipsa vel exercitationem ullam quos aut nostrum cupiditate fuga quaerat quam animi dolores. Sequi itaque, unde perferendis nemo debitis dolor.</div>
+													<div class="item__title">{{ project.name }}</div>
+													<div class="item__text">{{ project.description }}</div>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="columns__column">
-										<div class="columns__item item">
-											<div class="item__row">
-												<div class="item__image"><img src="img/image.png" alt=""></div>
-												<div class="item__body">
-													<div class="item__title">The description for the image</div>
-													<div class="item__text">Pariatur iure ab sunt nesciunt, quibusdam odio iste cumque itaque, ipsa vel exercitationem ullam quos aut nostrum cupiditate fuga quaerat quam animi dolores. Sequi itaque, unde perferendis nemo debitis dolor.</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="columns__column">
-										<div class="columns__item item">
-											<div class="item__row">
-												<div class="item__image"><img src="img/image.png" alt=""></div>
-												<div class="item__body">
-													<div class="item__title">The description for the image</div>
-													<div class="item__text">Pariatur iure ab sunt nesciunt, quibusdam odio iste cumque itaque, ipsa vel exercitationem ullam quos aut nostrum cupiditate fuga quaerat quam animi dolores. Sequi itaque, unde perferendis nemo debitis dolor.</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="columns__column">
-										<div class="columns__item item">
-											<div class="item__row">
-												<div class="item__image"><img src="img/image.png" alt=""></div>
-												<div class="item__body">
-													<div class="item__title">The description for the image</div>
-													<div class="item__text">Pariatur iure ab sunt nesciunt, quibusdam odio iste cumque itaque, ipsa vel exercitationem ullam quos aut nostrum cupiditate fuga quaerat quam animi dolores. Sequi itaque, unde perferendis nemo debitis dolor.</div>
-												</div>
-											</div>
-										</div>
-									</div>
+									{% endfor %}
 								</div>
 							</div>
 						</div>
-						<div class="vertical">
-							<div class='container'>
-								<div class="vertical__title title">Мои достижения</div>
-								<div class="vertical__body">
-									<div class="vertical__row">
-										<div class="vertical__column vertical__column_1">
-											<div class="vertical__item">
-												<div class="vertical__subtitle">Описание</div>
-												<div class="vertical__label">Проект</div>
-												<div class="vertical__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint tenetur fugit vel, eligendi illum, placeat quo vero reiciendis consectetur.</div>
-												<a href="" class="vertical__btn">Поделиться</a>
-											</div>
-										</div>
-										<div class="vertical__column vertical__column_2">
-											<div class="vertical__item">
-												<div class="vertical__subtitle">Описание</div>
-												<div class="vertical__label">Проект</div>
-												<div class="vertical__text">
-													<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint tenetur fugit vel, eligendi illum, placeat quo vero reiciendis consectetur.</p>
-												</div>
-												<a href="" class="vertical__btn">Поедлиться</a>
-											</div>
-										</div>
-										<div class="vertical__column vertical__column_3">
-											<div class="vertical__item">
-												<div class="vertical__subtitle">Описание</div>
-												<div class="vertical__label">Проект</div>
-												<div class="vertical__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint tenetur fugit vel, eligendi illum, placeat quo vero reiciendis consectetur.</div>
-												<a href="" class="vertical__btn">Поделиться</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>		
 				<footer class="footer">
 					<div class="container">
 						<div class="footer__row">
