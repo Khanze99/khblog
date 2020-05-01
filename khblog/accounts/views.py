@@ -59,7 +59,7 @@ def logout_view(request):
     return redirect('/')
 
 
-def profile(request):
+def change_profile(request, uid):
     users = 0
     if request.method == "POST":
         u_form = UserUpdateForm(request.POST, instance=request.user)
@@ -73,7 +73,7 @@ def profile(request):
                 send_mail_pass.delay(username, email)
             u_form.save()
             p_form.save()
-            return redirect('profile')
+            return redirect('profile_change')
     else:
         users = User.objects.all().count()
         u_form = UserUpdateForm(instance=request.user)
@@ -83,15 +83,14 @@ def profile(request):
         'p_form': p_form,
         'users': users
     }
-    return render(request, "registration/profile.html", context)
+    return render(request, "registration/profile_change.html", context)
 
 
 @login_required(login_url='/need_login/')
-def profiles(request, id):
-    user = User.objects.get(id=id)
-    posts = Post.objects.filter(author=id)
-    context = {"user": user, "posts": posts}
-    return render(request, "registration/profiles.html", context=context)
+def profile(request, username):
+    profile = Profile.objects.get(user__username=username)
+    context = {"profile": profile}
+    return render(request, "registration/profile.html", context=context)
 
 
 def need_login(request):
