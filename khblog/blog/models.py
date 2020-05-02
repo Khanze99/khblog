@@ -6,11 +6,14 @@ from django.contrib.auth.models import User
 from markdown import markdown
 from PIL import Image as ImagePil
 from uuid import uuid4
+import re
 
 
 def upload_location(instance, filename):
-    file = filename.split('.')
-    return f"post/{uuid4()}.{file[1]}"
+    pattern = r'.*\.(png|jpg|gif)'
+    filename = filename.lower()
+    formats = re.findall(pattern, filename)
+    return f"post/{uuid4()}.{formats[0]}"
 
 
 class Post(models.Model):
