@@ -9,6 +9,8 @@
                 <p>{{ user.email }}</p>
                 <a href="{% url 'my_posts' %}" ><span class="btn btn-blue" style="color: white; background: #4682B4;">My posts</span></a>
                 <a href="{% url 'liked_posts' id=request.user.id %}" ><span class="btn btn-blue" style="color: white; background: #4682B4;">Liked posts</span></a>
+                <a href="{% url 'profile' username=request.user.username%}"><span class="btn btn-blue" style="color: white; background: #4682B4;">Profile</span></a>
+
                     <p style="padding: 5px;">Total Registered: {{users}}</p>
 
             </div>

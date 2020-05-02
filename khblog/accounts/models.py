@@ -6,15 +6,21 @@ from django.contrib.auth.models import User
 
 from PIL import Image
 from uuid import uuid4
+import re
 
 
 def upload_profile(instance, filename):
-    return '{}/{}'.format(instance.user.id, filename)
+    pattern = r'.*\.(png|jpg|gif)'
+    filename = filename.lower()
+    formats = re.findall(pattern, filename)
+    return '{}/{}.{}'.format(instance.user.id, uuid4().hex, formats[0])
 
 
 def upload_projects_image(instance, filename):
-    file = filename.split('.')
-    return f'projects/{uuid4()}.{file[1]}'
+    pattern = r'.*\.(png|jpg|gif)'
+    filename = filename.lower()
+    formats = re.findall(pattern, filename)
+    return f'projects/{uuid4()}.{formats[0]}'
 
 
 class Profile(models.Model):
