@@ -13,7 +13,7 @@ idna==2.8
 importlib-metadata==0.23
 kombu==4.6.5
 more-itertools==7.2.0
-Pillow==6.0.0
+Pillow==9.0.1
 psycopg2==2.8.2
 pytz==2018.9
 redis==3.3.11
