@@ -9,7 +9,7 @@ django-celery-results==2.4.0
 django-crispy-forms==1.7.2
 gunicorn==23.0.0
 djangorestframework==3.15.2
-gunicorn==19.9.0
+gunicorn==22.0.0
 idna==3.7
 importlib-metadata==0.23
 kombu==4.6.5
